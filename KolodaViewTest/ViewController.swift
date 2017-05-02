@@ -7,19 +7,70 @@
 //
 
 import UIKit
+import Koloda
+
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var kolodaView: KolodaView!
+    var images = [UIImage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        kolodaView.delegate = self
+        kolodaView.dataSource = self
+        
+        for _ in 0...10 {
+            images.append(UIImage(named: "thumbsDown")!)
+            images.append(UIImage(named: "thumbsUp")!)
+            
+        }
+        
+        kolodaView.reloadData()
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
+    
+    
 
 
 }
 
+extension ViewController: KolodaViewDelegate {
+//    func kolodaDidRunOutOfCards(koloda: KolodaView) {
+//        dataSource.reset()
+//    }
+    
+    func koloda(koloda: KolodaView, didSelectCardAt index: Int) {
+        print("Select at \(index)")
+    }
+}
+
+extension ViewController: KolodaViewDataSource {
+    
+    func kolodaNumberOfCards(_ koloda: KolodaView) -> Int {
+        return images.count
+    }
+
+    func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
+        
+        let blueView = profile(frame: koloda.frame)
+        blueView.nameLabel.text = "Hello World"
+        return blueView
+
+//        return UIImageView(image: images[index])
+    }
+    
+       // return UIImageView(image: images[index])
+    
+//    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+//        return NSBundle.mainBundle().loadNibNamed("OverlayView",
+//                                                  owner: self, options: nil)[0] as? OverlayView
+//    }
+
+}

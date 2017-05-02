@@ -12,9 +12,16 @@
 		523DBB6F1EB8756000CD4335 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523DBB6D1EB8756000CD4335 /* Main.storyboard */; };
 		523DBB711EB8756000CD4335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 523DBB701EB8756000CD4335 /* Assets.xcassets */; };
 		523DBB741EB8756000CD4335 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523DBB721EB8756000CD4335 /* LaunchScreen.storyboard */; };
+		523DBB821EB88C0C00CD4335 /* profile.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523DBB811EB88C0C00CD4335 /* profile.xib */; };
+		523DBB841EB8911700CD4335 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523DBB831EB8911700CD4335 /* profile.swift */; };
+		523DBB861EB8945B00CD4335 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523DBB851EB8945B00CD4335 /* MapKit.framework */; };
+		523DBB881EB8946900CD4335 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523DBB871EB8946900CD4335 /* CoreLocation.framework */; };
+		CA7B8953DD654D505EA4F754 /* Pods_KolodaViewTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D83B949253527CE376F354DD /* Pods_KolodaViewTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3DCDB9C3EB72EA3967BD1F89 /* Pods-KolodaViewTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KolodaViewTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest.debug.xcconfig"; sourceTree = "<group>"; };
+		444DA77A1CD3E25FCEF5E07E /* Pods-KolodaViewTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KolodaViewTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest.release.xcconfig"; sourceTree = "<group>"; };
 		523DBB661EB8756000CD4335 /* KolodaViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KolodaViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		523DBB691EB8756000CD4335 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523DBB6B1EB8756000CD4335 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +29,11 @@
 		523DBB701EB8756000CD4335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		523DBB731EB8756000CD4335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		523DBB751EB8756000CD4335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		523DBB811EB88C0C00CD4335 /* profile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = profile.xib; sourceTree = "<group>"; };
+		523DBB831EB8911700CD4335 /* profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
+		523DBB851EB8945B00CD4335 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		523DBB871EB8946900CD4335 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D83B949253527CE376F354DD /* Pods_KolodaViewTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KolodaViewTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523DBB881EB8946900CD4335 /* CoreLocation.framework in Frameworks */,
+				523DBB861EB8945B00CD4335 /* MapKit.framework in Frameworks */,
+				CA7B8953DD654D505EA4F754 /* Pods_KolodaViewTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +55,8 @@
 			children = (
 				523DBB681EB8756000CD4335 /* KolodaViewTest */,
 				523DBB671EB8756000CD4335 /* Products */,
+				EC5D062076B6BD033BD45640 /* Pods */,
+				F281F7CA5AF5D9CF83E5525B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,11 +74,32 @@
 				523DBB691EB8756000CD4335 /* AppDelegate.swift */,
 				523DBB6B1EB8756000CD4335 /* ViewController.swift */,
 				523DBB6D1EB8756000CD4335 /* Main.storyboard */,
+				523DBB811EB88C0C00CD4335 /* profile.xib */,
+				523DBB831EB8911700CD4335 /* profile.swift */,
 				523DBB701EB8756000CD4335 /* Assets.xcassets */,
 				523DBB721EB8756000CD4335 /* LaunchScreen.storyboard */,
 				523DBB751EB8756000CD4335 /* Info.plist */,
 			);
 			path = KolodaViewTest;
+			sourceTree = "<group>";
+		};
+		EC5D062076B6BD033BD45640 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3DCDB9C3EB72EA3967BD1F89 /* Pods-KolodaViewTest.debug.xcconfig */,
+				444DA77A1CD3E25FCEF5E07E /* Pods-KolodaViewTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F281F7CA5AF5D9CF83E5525B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				523DBB871EB8946900CD4335 /* CoreLocation.framework */,
+				523DBB851EB8945B00CD4335 /* MapKit.framework */,
+				D83B949253527CE376F354DD /* Pods_KolodaViewTest.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 523DBB781EB8756000CD4335 /* Build configuration list for PBXNativeTarget "KolodaViewTest" */;
 			buildPhases = (
+				7C8FF0BA016190D4BDC89BBE /* [CP] Check Pods Manifest.lock */,
 				523DBB621EB8756000CD4335 /* Sources */,
 				523DBB631EB8756000CD4335 /* Frameworks */,
 				523DBB641EB8756000CD4335 /* Resources */,
+				E0299E95DD0F20B741E5C197 /* [CP] Embed Pods Frameworks */,
+				9C3C391D7BD1A56BCB0F03DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -125,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				523DBB741EB8756000CD4335 /* LaunchScreen.storyboard in Resources */,
+				523DBB821EB88C0C00CD4335 /* profile.xib in Resources */,
 				523DBB711EB8756000CD4335 /* Assets.xcassets in Resources */,
 				523DBB6F1EB8756000CD4335 /* Main.storyboard in Resources */,
 			);
@@ -132,11 +174,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7C8FF0BA016190D4BDC89BBE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9C3C391D7BD1A56BCB0F03DB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0299E95DD0F20B741E5C197 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		523DBB621EB8756000CD4335 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523DBB841EB8911700CD4335 /* profile.swift in Sources */,
 				523DBB6C1EB8756000CD4335 /* ViewController.swift in Sources */,
 				523DBB6A1EB8756000CD4335 /* AppDelegate.swift in Sources */,
 			);
@@ -259,6 +350,7 @@
 		};
 		523DBB791EB8756000CD4335 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DCDB9C3EB72EA3967BD1F89 /* Pods-KolodaViewTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XUN95V9WDZ;
@@ -272,6 +364,7 @@
 		};
 		523DBB7A1EB8756000CD4335 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 444DA77A1CD3E25FCEF5E07E /* Pods-KolodaViewTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XUN95V9WDZ;
@@ -302,6 +395,7 @@
 				523DBB7A1EB8756000CD4335 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,4 +8,9 @@ target 'KolodaViewTest' do
   # Pods for KolodaViewTest
 use_frameworks!
 pod "Koloda"
+
+pod 'Firebase/Core'
+pod 'Firebase/Storage'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
 end

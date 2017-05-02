@@ -21,13 +21,6 @@ class ViewController: UIViewController {
         kolodaView.delegate = self
         kolodaView.dataSource = self
         
-        for _ in 0...10 {
-            images.append(UIImage(named: "thumbsDown")!)
-            images.append(UIImage(named: "thumbsUp")!)
-            
-        }
-        
-        kolodaView.reloadData()
         
     }
 
@@ -59,7 +52,7 @@ extension ViewController: KolodaViewDataSource {
 
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         
-        let blueView = profile(frame: koloda.frame)
+        let blueView = Profile(frame: koloda.frame)
         blueView.nameLabel.text = "Hello World"
         return blueView
 

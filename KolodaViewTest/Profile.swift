@@ -9,8 +9,8 @@
 import UIKit
 
 
-class profile: UIView {
-    @IBOutlet var contentView: profile!
+class Profile: UIView {
+ 
     @IBOutlet weak var imageView: UIImageView!
    // @IBOutlet weak var mapKitView: MKMapView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -49,7 +49,7 @@ class profile: UIView {
     private func viewFromNibForClass() -> UIView {
         
         let bundle = Bundle.main
-        let view = bundle.loadNibNamed("profile", owner: self, options: nil)?.first as! UIView
+        let view = bundle.loadNibNamed("Profile", owner: self, options: nil)?.first as! UIView
         //let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
         //let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         print(123)

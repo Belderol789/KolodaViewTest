@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
     var profileDesc : String? = ""
     var profileName : String? = ""
     var profileImage : String? = ""
+    var profileRating : String? = ""
     var currentUserID = FIRAuth.auth()?.currentUser?.uid
     var currentUser : FIRUser? = FIRAuth.auth()?.currentUser
     var saveIconCenter : CGPoint!
@@ -207,6 +208,7 @@ class ProfileViewController: UIViewController {
             self.profileSecond = dictionary?["secondSubject"] as? String
             self.profileThird = dictionary?["thirdSubject"] as? String
             self.profileImage = dictionary?["profileImageUrl"] as? String
+            self.profileRating = dictionary?["rating"] as? String
             
             self.setupProfile()
         })

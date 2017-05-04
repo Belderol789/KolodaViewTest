@@ -18,6 +18,7 @@
 		52C638701EB978B00090AED1 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6386E1EB978B00090AED1 /* UserTableViewCell.xib */; };
 		52C638721EB983680090AED1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C638711EB983680090AED1 /* ProfileViewController.swift */; };
 		52C638741EB983AC0090AED1 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C638731EB983AC0090AED1 /* UserViewController.swift */; };
+		52F21D771EBADF6A004B1040 /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F21D761EBADF69004B1040 /* OfferViewController.swift */; };
 		52F4FE2D1EBA163D00503BD4 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4FE2B1EBA163D00503BD4 /* ChatTableViewCell.swift */; };
 		52F4FE2E1EBA163D00503BD4 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4FE2C1EBA163D00503BD4 /* ChatTableViewCell.xib */; };
 		52F4FE301EBA165A00503BD4 /* ChatImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4FE2F1EBA165A00503BD4 /* ChatImageTableViewCell.xib */; };
@@ -50,6 +51,7 @@
 		52C6386E1EB978B00090AED1 /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		52C638711EB983680090AED1 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		52C638731EB983AC0090AED1 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		52F21D761EBADF69004B1040 /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		52F4FE2B1EBA163D00503BD4 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		52F4FE2C1EBA163D00503BD4 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
 		52F4FE2F1EBA165A00503BD4 /* ChatImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				52C638731EB983AC0090AED1 /* UserViewController.swift */,
 				52F4FE331EBA172400503BD4 /* ChatViewController.swift */,
 				52F4FE391EBA236D00503BD4 /* ImageViewController.swift */,
+				52F21D761EBADF69004B1040 /* OfferViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				52C638741EB983AC0090AED1 /* UserViewController.swift in Sources */,
 				52F94BF11EB8BB6E003D2184 /* Extensions.swift in Sources */,
 				52F94BED1EB8B843003D2184 /* LoginViewController.swift in Sources */,
+				52F21D771EBADF6A004B1040 /* OfferViewController.swift in Sources */,
 				52F4FE321EBA166000503BD4 /* ChatImageTableViewCell.swift in Sources */,
 				52C6386F1EB978B00090AED1 /* UserTableViewCell.swift in Sources */,
 				52F4FE3A1EBA236D00503BD4 /* ImageViewController.swift in Sources */,

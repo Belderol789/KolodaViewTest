@@ -235,6 +235,9 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func offerClicked(_ sender: UIButton) {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "OfferViewController") as? OfferViewController else {return}
+        controller.selectedUser = self.selectedProfile
+        present(controller, animated: true, completion: nil)
         
     }
     

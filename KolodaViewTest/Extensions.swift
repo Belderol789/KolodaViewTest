@@ -96,3 +96,16 @@ extension UITextField {
     }
 }
 
+extension UITextView {
+    func curveEdges() {
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+    }
+    
+    func borderColor() {
+        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.borderWidth = 1.0
+    }
+
+}
+

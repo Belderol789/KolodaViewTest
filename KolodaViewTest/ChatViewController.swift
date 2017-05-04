@@ -20,6 +20,7 @@ class ChatViewController: UIViewController {
     var rowHeight : CGFloat? = 0.0
 
     
+    @IBOutlet weak var sendButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView! {
         didSet{
@@ -37,18 +38,7 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         ref = FIRDatabase.database().reference()
-        
-//        if let email = currentUser?.email {
-//            self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Helvetica-Bold", size: 18)!]
-//            if email == currentChat.userEmails[0] {
-//                self.navigationItem.title = "\(currentChat.userScreenNames[1])"
-//            } else {
-//                self.navigationItem.title = "\(currentChat.userScreenNames[0])"
-//            }
-//        }
-        
-        
-        
+
         listenToFirebase()
 
 
@@ -58,6 +48,9 @@ class ChatViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    @IBAction func backButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     func listenToFirebase() {
@@ -113,6 +106,7 @@ class ChatViewController: UIViewController {
     }
 
     @IBAction func addButtonTapped(_ sender: Any) {
+        self.sendButton.isUserInteractionEnabled = false
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
@@ -181,7 +175,7 @@ class ChatViewController: UIViewController {
     func saveImagePath(_ path: String) {
         lastId = lastId + 1
         
-        let chatValue : [String: Any] = ["userID": currentUser!.uid, "userEmail": currentUser!.email!, "body":"\(currentUser!.uid)-\(createTimeStamp())", "timestamp": createTimeStamp(), "image": path]
+        let chatValue : [String: Any] = ["userID": currentUser!.uid, "userEmail": currentUser!.email!, "body": inputTextField.text!, "timestamp": createTimeStamp(), "image": path]
         
         ref.child("chat").child((currentChat?.id)!).child("messages").child("\(lastId)").updateChildValues(chatValue)
     }
@@ -221,9 +215,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
         return messages.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return rowHeight!
-    }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -232,10 +224,13 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
         if currentMessage.imageURL != "nil" {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChatImageTableViewCell") as? ChatImageTableViewCell else {return UITableViewCell()}
             
+      
             cell.nameLabel.text = recipientUser?.name
             let messageURL = currentMessage.imageURL
             cell.chatImageView.loadImageUsingCacheWithUrlString(messageURL)
             cell.timeSentLabel.text = currentMessage.timestamp
+            self.sendButton.isUserInteractionEnabled = true
+
         
             return cell
             
@@ -245,6 +240,8 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
             cell.nameLabel.text = recipientUser?.name
             cell.timeLabel.text = currentMessage.timestamp
             cell.chatTextView.text = currentMessage.body
+            
+            
             
             return cell
             

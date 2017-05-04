@@ -12,14 +12,29 @@ class ImageViewController: UIViewController {
     
     var currentMessage : Message = Message()
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var labelView: UILabel!
+    @IBOutlet weak var imageView: UIImageView!{
+        didSet{
+            imageView.borderColors()
+        }
+    }
+    @IBOutlet weak var textView: UITextView!{
+        didSet{
+            textView.curveEdges()
+            textView.borderColor()
+            textView.isUserInteractionEnabled = false
+        }
+    }
+        @IBOutlet weak var button: UIButton!{
+        didSet{
+            button.circlerImage()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let messageUrl = currentMessage.imageURL
         imageView.loadImageUsingCacheWithUrlString(messageUrl)
-        labelView.text = currentMessage.body
+        textView.text = "sent by: \(currentMessage.userEmail) on \(currentMessage.timestamp)"
 
         
     }
@@ -29,6 +44,16 @@ class ImageViewController: UIViewController {
         
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        
+        dismiss(animated: true, completion: nil)
+        
+//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        guard let chatController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else {return}
+//        present(chatController, animated: true, completion: nil)
+       
+        
+    }
 
 
 }

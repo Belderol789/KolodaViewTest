@@ -21,6 +21,7 @@ class User {
     var firstSub : String? //10
     var secondSub : String? //11
     var thirdSub : String? //12
+    var rating : String?
     
     init() {
         uid = ""
@@ -35,6 +36,7 @@ class User {
         firstSub = ""
         secondSub = "Optional"
         thirdSub = "Optional"
+        rating = ""
     }
     
     init(dictionary: [String: Any]) {
@@ -50,11 +52,12 @@ class User {
         self.firstSub = dictionary["subject"] as? String
         self.secondSub = dictionary["secondSubject"] as? String
         self.thirdSub = dictionary["thirdSubject"] as? String
+        self.rating = dictionary["rating"] as? String
         
         //self.numberOfPosts = dictionary["numberOfPosts"] as? String
     }
     
-    init(anID: String, anEmail: String, aName: String, anAge: String, aGender: String, aDesc: String, anImgUrl: String, aLocation: String, aPrice: String, aSub: String) {
+    init(anID: String, anEmail: String, aName: String, anAge: String, aGender: String, aDesc: String, anImgUrl: String, aLocation: String, aPrice: String, aSub: String, aRating: String) {
         uid = anID
         name = aName
         email = anEmail
@@ -65,5 +68,6 @@ class User {
         location = aLocation
         price = aPrice
         firstSub = aSub
+        rating = aRating
     }
 }

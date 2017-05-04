@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkIfUserExist()
         setupUI()
 
         
@@ -33,6 +34,13 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     
+    }
+    
+    func checkIfUserExist() {
+        if(FIRAuth.auth()?.currentUser) != nil {
+            print("A User is logged in")
+            goToPage(page: "ViewController")
+        }
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -84,8 +92,10 @@ class LoginViewController: UIViewController {
     
     func goToPage(page: String)
     {
-        let controller = storyboard?.instantiateViewController(withIdentifier: page)
-        present(controller!, animated: true, completion: nil)
+        
+        let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        appDelegate.window?.rootViewController = gameScene
         
     }
 

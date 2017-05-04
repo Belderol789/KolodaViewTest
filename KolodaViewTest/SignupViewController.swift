@@ -13,6 +13,23 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
             imageView.circlerImage()
+            imageView.borderColors()
+            
+        }
+    }
+    @IBOutlet weak var firstSubTextField: UITextField!{
+        didSet {
+            firstSubTextField.borderColor()
+        }
+    }
+    @IBOutlet weak var secondSubTextField: UITextField!{
+        didSet{
+            secondSubTextField.borderColor()
+        }
+    }
+    @IBOutlet weak var thirdSubTextField: UITextField!{
+        didSet{
+            thirdSubTextField.borderColor()
         }
     }
     @IBOutlet weak var emailTextField: UITextField!
@@ -23,10 +40,25 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var detailView: UIView! {
+        didSet {
+            detailView.layer.borderWidth = 1.0
+            detailView.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
+    @IBOutlet weak var credentialView: UIView! {
+        didSet {
+            credentialView.layer.borderWidth = 1.0
+            credentialView.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+  
        
         handleImage()
         setupUI()
@@ -48,9 +80,9 @@ class SignupViewController: UIViewController {
     }
 
     @IBAction func signupButtonTapped(_ sender: Any) {
-        guard let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text, let gender = genderTextField.text, let age = ageTextField.text, let name = nameTextField.text else {return}
+        guard let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text, let gender = genderTextField.text, let age = ageTextField.text, let name = nameTextField.text, let location = locationTextField.text, let subject = firstSubTextField.text, let secondSubject = secondSubTextField.text, let thirdSubject = thirdSubTextField.text else {return}
         
-        if email == "" || password  == "" || gender  == "" || age  == "" || name  == ""  {
+        if email == "" || password  == "" || gender  == "" || age  == "" || name  == "" || location == "" || subject == "" {
             
             addAlertAndAction(title: "Required Field Missing", message: "Kindly fill-in the required fields", actionTitle: "Ok")
             
@@ -71,6 +103,8 @@ class SignupViewController: UIViewController {
                 return
             }
             
+            
+            
             guard let uid = user?.uid else {
                 return
             }
@@ -84,7 +118,7 @@ class SignupViewController: UIViewController {
                         return
                     }
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "desc" : self.textView.text] as [String : Any]
+                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50Php/hr", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject] as [String : Any]
                         self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
                         self.goToPage(page: "ViewController")
                     }

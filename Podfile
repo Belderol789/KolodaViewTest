@@ -3,11 +3,10 @@
 
 target 'KolodaViewTest' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+
 
   # Pods for KolodaViewTest
 use_frameworks!
-pod "Koloda"
 
 pod 'Firebase/Core'
 pod 'Firebase/Storage'

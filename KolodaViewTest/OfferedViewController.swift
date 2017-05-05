@@ -12,7 +12,14 @@ import Firebase
 class OfferedViewController: UIViewController {
     
     var offeredToID : String = ""
-    var offerIds : [String] = []
+    var offerLocation : String? = ""
+    var offeresImage : String? = ""
+    var offerPrice : String? = ""
+    var offerSchedule : String? = ""
+    var offerSubject : String? = ""
+    var offerName : String? = ""
+    var users : [User] = []
+
     var ref : FIRDatabaseReference!
 
     @IBOutlet weak var tableView: UITableView!{
@@ -42,10 +49,36 @@ class OfferedViewController: UIViewController {
         ref.child("offers").observe(.childAdded, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String : Any] {
-                 let currentUserID = dictionary["offeredBy"] as! String
+                //let user = User(dictionary: dictionary)
+                let currentUserID = dictionary["offeredBy"] as! String
+                self.offerLocation = dictionary["location"] as? String
+                self.offerSchedule = dictionary["schedule"] as? String
+                self.offerPrice = dictionary["price"] as? String
+                self.offeresImage = dictionary["offeresImage"] as? String
+                self.offerSubject = dictionary["subject"] as? String
+                self.offerName = dictionary["name"] as? String
+                
                 if FIRAuth.auth()?.currentUser?.uid == currentUserID {
-                    print(123)
+                    
+                    let newUser = User()
+                    newUser.location = self.offerLocation
+                    newUser.schedule = self.offerSchedule
+                    newUser.price = self.offerPrice
+                    newUser.firstSub = self.offerSubject
+                    newUser.profileImageUrl = self.offeresImage
+                    newUser.name = self.offerName
+                    
+                    
+                    self.users.append(newUser)
+                    
+                    
                 }
+                
+                
+                DispatchQueue.main.async(execute: {
+                    self.tableView.reloadData()
+                    
+                })
                 
 
             }
@@ -53,22 +86,6 @@ class OfferedViewController: UIViewController {
         })
         
             
-            
-            
-//            if let result = snapshot.children.allObjects as? [FIRDataSnapshot] {
-//                for child in result {
-//                    let userKey = child.key 
-//                    self.ref.child("offers").child(userKey).observe(.childAdded, with: { (snapshot) in
-//                        
-//                        if let dictionary = snapshot.value as? [String : Any] {
-//                            let userId = dictionary["offeredBy"] as? String
-//                            print(userId)
-//                            
-//                        }
-//                    })
-//                    
-//                }
-//            }
     }
     
     
@@ -82,11 +99,22 @@ extension OfferedViewController : UITableViewDelegate {
 extension OfferedViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
+        
+        return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell else {return UITableViewCell()}
+        
+        let currentUser = users[indexPath.row]
+        
+        cell.nameLabel.text = currentUser.name
+        cell.locationTextView.text = currentUser.location
+        cell.priceLabel.text = currentUser.price
+        cell.subjectLabel.text = currentUser.firstSub
+        cell.scheduleLabel.text = currentUser.schedule
+
         
         return cell
     }

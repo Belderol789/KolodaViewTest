@@ -25,6 +25,8 @@ class OfferViewController: UIViewController {
     var currentLocation : String? = ""
     var currentSubject : String? = ""
     var currentSchedule : String? = ""
+    var userList : [User] = []
+    var ref : FIRDatabaseReference!
     
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var locationTextView: UITextView!{
@@ -51,7 +53,7 @@ class OfferViewController: UIViewController {
         setupData()
         currentUser = FIRAuth.auth()?.currentUser
         listenToFirebase()
-      
+    
 
        
     }
@@ -60,6 +62,8 @@ class OfferViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    
     
     func setupUpdatedData() {
         

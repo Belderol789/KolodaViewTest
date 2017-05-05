@@ -22,12 +22,8 @@ class UserTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var priceRangeLabel: UILabel!
-    @IBOutlet weak var moreButton: UIButton! {
-        didSet {
-            moreButton.curveEdges()
-        }
-    }
     
 
     override func awakeFromNib() {

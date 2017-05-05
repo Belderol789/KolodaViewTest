@@ -19,7 +19,7 @@ class OfferViewController: UIViewController {
         }
     }
     var currentUser : FIRUser!
-    var currentUserName : String? = ""
+    var currentUserID : String? = ""
     var currentUserImageUrl : String? = ""
     var currentPrice : String? = ""
     var currentLocation : String? = ""
@@ -28,6 +28,12 @@ class OfferViewController: UIViewController {
     
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var locationTextView: UITextView!
+        {
+        didSet{
+            locationTextView.textViewDidBeginEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
+            locationTextView.textViewDidEndEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
+        }
+    }
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var scheduleTextField: UITextField!
     @IBOutlet weak var offerButton: UIButton!{
@@ -92,9 +98,10 @@ class OfferViewController: UIViewController {
     @IBAction func offerButtonTapped(_ sender: Any) {
         
         setupUpdatedData()
-        
-       
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        //guard let offeredPage = storyboard.instantiateViewController(withIdentifier: "OfferedViewController") as? OfferedViewController else {return}
+        //present(offeredPage, animated: true, completion: nil)
+ 
     }
     
     func setupData() {
@@ -110,12 +117,11 @@ class OfferViewController: UIViewController {
     
     func selectedUserFirebase() {
         
-        let offerID = (selectedUser?.uid)!
+        //let offerID = (selectedUser?.uid)!
         
-        let offer : [String : Any] = ["offeredBy": currentUserName ?? "Anonymous", "offeredTo" : selectedUser?.name ?? "Anonymous", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice!, "location" : currentLocation!, "subject" : currentSubject!, "schedule" : currentSchedule!, "status": "nil"]
+        let offer : [String : Any] = ["offeredBy": currentUserID ?? "Anonymous", "offeredTo" : selectedUser?.uid ?? "Anonymous", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice!, "location" : currentLocation!, "subject" : currentSubject!, "schedule" : currentSchedule!, "status": "nil"]
         
-        FIRDatabase.database().reference().child("offers").child(offerID).updateChildValues(offer)
-        
+        FIRDatabase.database().reference().child("offers").childByAutoId().updateChildValues(offer)
         
         
     }
@@ -124,7 +130,7 @@ class OfferViewController: UIViewController {
         FIRDatabase.database().reference().child("users").child(currentUser.uid).observe(.value, with: { (snapshot) in
             
             let dictionary = snapshot.value as? [String : Any]
-            self.currentUserName = dictionary?["name"] as? String
+            self.currentUserID = dictionary?["uid"] as? String
             self.currentUserImageUrl = dictionary?["profileImageUrl"] as? String
             
         })

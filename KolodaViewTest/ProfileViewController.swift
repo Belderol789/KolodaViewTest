@@ -51,6 +51,23 @@ class ProfileViewController: UIViewController {
             secondTextField.borderColor()
         }
     }
+    
+    @IBOutlet weak var roleView: UIView!
+    @IBOutlet weak var tuteeButton: UIButton!{
+        didSet{
+            tuteeButton.circlerImage()
+        }
+    }
+    @IBOutlet weak var tutorButton: UIButton!{
+        didSet{
+            tutorButton.circlerImage()
+        }
+    }
+    @IBOutlet weak var cancelButton: UIButton!{
+        didSet{
+            cancelButton.circlerImage()
+        }
+    }
     @IBOutlet weak var thirdTextField: UITextField!{
         didSet{
             thirdTextField.borderColor()
@@ -60,12 +77,16 @@ class ProfileViewController: UIViewController {
         didSet{
             locationTextView.layer.borderColor = UIColor.orange.cgColor
             locationTextView.layer.borderWidth = 1.0
+            locationTextView.textViewDidBeginEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
+            locationTextView.textViewDidEndEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
         }
     }
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
             descTextView.layer.borderWidth = 1.0
             descTextView.layer.borderColor = UIColor.orange.cgColor
+            descTextView.textViewDidBeginEditing(textView: descTextView, text: "Say something about yourself!")
+            descTextView.textViewDidEndEditing(textView: descTextView, text: "Say something about yourself!")
         }
     }
     @IBOutlet weak var nameLabel: UILabel!
@@ -80,6 +101,12 @@ class ProfileViewController: UIViewController {
         didSet{
             saveButton.circlerImage()
             saveButton.borderColors()
+        }
+    }
+    @IBOutlet weak var changeRoleButton: UIButton!{
+        didSet{
+            changeRoleButton.circlerImage()
+            changeRoleButton.borderColors()
         }
     }
    
@@ -139,6 +166,10 @@ class ProfileViewController: UIViewController {
         goToPage(page: "ViewController")
     }
     
+    @IBAction func changeRoleTapped(_ sender: Any) {
+        
+    }
+    
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let updatedLocation = locationTextView.text,
         let updatedDesc = descTextView.text,
@@ -178,6 +209,8 @@ class ProfileViewController: UIViewController {
         
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(profilePictureValue)
     }
+    
+    
 
     
     func handleImage(){

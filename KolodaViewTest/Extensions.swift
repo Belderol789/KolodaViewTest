@@ -106,6 +106,23 @@ extension UITextView {
         self.layer.borderColor = UIColor.orange.cgColor
         self.layer.borderWidth = 1.0
     }
+    
+    func textViewDidBeginEditing(textView: UITextView, text: String){
+        if(textView.text == text) {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(textView: UITextView, text: String) {
+        if (textView.text == "") {
+            textView.text = text
+            textView.textColor = .lightGray
+        }
+        textView.becomeFirstResponder()
+    }
+    
 
 }
 

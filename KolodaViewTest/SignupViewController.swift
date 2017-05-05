@@ -10,6 +10,11 @@ import UIKit
 import Firebase
 
 class SignupViewController: UIViewController {
+    
+    
+    var role : String? = "tutee"
+    var id : String = ""
+    
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
             imageView.circlerImage()
@@ -19,38 +24,82 @@ class SignupViewController: UIViewController {
     }
     @IBOutlet weak var firstSubTextField: UITextField!{
         didSet {
-            firstSubTextField.borderColor()
+            firstSubTextField.layer.borderColor = UIColor.black.cgColor
         }
     }
     @IBOutlet weak var secondSubTextField: UITextField!{
         didSet{
-            secondSubTextField.borderColor()
+            secondSubTextField.layer.borderColor = UIColor.black.cgColor
         }
     }
     @IBOutlet weak var thirdSubTextField: UITextField!{
         didSet{
-            thirdSubTextField.borderColor()
+            thirdSubTextField.layer.borderColor = UIColor.black.cgColor
         }
     }
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var genderTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var choiceView: UIView!
+    @IBOutlet weak var emailTextField: UITextField!{
+        didSet {
+            emailTextField.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            passwordTextField.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    @IBOutlet weak var confirmPasswordTextField: UITextField!{
+        didSet{
+            confirmPasswordTextField.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    @IBOutlet weak var genderTextField: UITextField!{
+        didSet{
+            genderTextField.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    @IBOutlet weak var ageTextField: UITextField!{
+        didSet{
+            ageTextField.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    @IBOutlet weak var textView: UITextView!{
+        didSet{
+            textView.layer.borderColor = UIColor.black.cgColor
+            textView.textViewDidBeginEditing(textView: textView, text: "Say something about yourself!")
+            textView.textViewDidEndEditing(textView: textView, text: "Say something about yourself!")
+        }
+    }
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var cancelButton: UIButton!{
+        didSet{
+            cancelButton.circlerImage()
+            cancelButton.layer.borderColor = UIColor.black.cgColor
+            cancelButton.layer.borderWidth = 1.0
+        }
+    }
+    @IBOutlet weak var tutorButton: UIButton!{
+        didSet{
+            tutorButton.circlerImage()
+        }
+    }
+    @IBOutlet weak var tuteeButton: UIButton!{
+        didSet{
+            tuteeButton.circlerImage()
+        }
+    }
     @IBOutlet weak var detailView: UIView! {
         didSet {
             detailView.layer.borderWidth = 1.0
-            detailView.layer.borderColor = UIColor.orange.cgColor
+            detailView.layer.borderColor = UIColor.black.cgColor
         }
     }
     @IBOutlet weak var credentialView: UIView! {
         didSet {
             credentialView.layer.borderWidth = 1.0
-            credentialView.layer.borderColor = UIColor.orange.cgColor
+            credentialView.layer.borderColor = UIColor.black.cgColor
         }
     }
     
@@ -59,7 +108,7 @@ class SignupViewController: UIViewController {
         super.viewDidLoad()
         
   
-       
+        choiceView.alpha = 0
         handleImage()
         setupUI()
 
@@ -69,6 +118,16 @@ class SignupViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        
+        if let viewWithTag = self.view.viewWithTag(100) {
+            print("Tag 100")
+            viewWithTag.removeFromSuperview()
+        }
+        else {
+            print("tag not found")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -96,6 +155,7 @@ class SignupViewController: UIViewController {
             
         }
         
+      
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
             
             if error != nil {
@@ -103,8 +163,7 @@ class SignupViewController: UIViewController {
                 return
             }
             
-            
-            
+        
             guard let uid = user?.uid else {
                 return
             }
@@ -118,9 +177,11 @@ class SignupViewController: UIViewController {
                         return
                     }
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject, "rating" : "0"] as [String : Any]
+                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject, "rating" : "0", "role" : self.role ?? "none"] as [String : Any]
                         self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
-                        self.goToPage(page: "ViewController")
+                        self.id = uid
+                        self.chooseRoleView()
+                        //self.goToPage(page: "ViewController")
                     }
                 })
             }
@@ -149,14 +210,37 @@ class SignupViewController: UIViewController {
         signupButton.layer.cornerRadius = 20
         signupButton.layer.masksToBounds = true
     }
-    
-  
-    
+
     func handleImage() {
         
         imageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(chooseProfileImage))
         imageView.addGestureRecognizer(tap)
+        
+    }
+    
+    func chooseRoleView() {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+          
+            self.choiceView.alpha = 0.95
+            self.tutorButton.addTarget(self, action: #selector(self.tutorButtonTapped(_:)), for: .touchUpInside)
+            self.tuteeButton.addTarget(self, action: #selector(self.tuteeButtonTapped(_:)), for: .touchUpInside)
+            
+        })
+    }
+    
+    func tutorButtonTapped(_ sender: Any) {
+        tuteeButton.isUserInteractionEnabled = false
+        FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutor"])
+
+        goToPage(page: "ViewController")
+    }
+    
+     func tuteeButtonTapped(_ sender: Any) {
+        tutorButton.isUserInteractionEnabled = false
+        FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutee"])
+        goToPage(page: "ViewController")
         
     }
     

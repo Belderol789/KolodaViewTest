@@ -12,11 +12,16 @@ import Firebase
 
 class ViewController: UIViewController {
     
+    var tutorUsers = [User]()
+    var tuteeUsers = [User]()
     var users = [User]()
     var profileButtonCenter : CGPoint!
     var offeredButtonCenter : CGPoint!
     var savedButtonCenter : CGPoint!
     var logoutButtonCenter : CGPoint!
+    var currentUserId : String? = ""
+    var currentUserStatus : String? = ""
+    var userRole : String! = ""
     
     @IBOutlet weak var userTableView: UITableView! {
         didSet{
@@ -55,12 +60,10 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUser()
-        profileButtonCenter = profileButton.center
-        savedButtonCenter = savedButton.center
-        offeredButtonCenter = offeredButton.center
-        logoutButtonCenter = logoutButton.center
         
+        currentUserId = FIRAuth.auth()?.currentUser?.uid
+        fetchUser()
+        setupButtonCenters()
         setupAnimation()
  
         
@@ -69,6 +72,14 @@ class ViewController: UIViewController {
        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
        
+    }
+    
+    
+    func setupButtonCenters() {
+        profileButtonCenter = profileButton.center
+        savedButtonCenter = savedButton.center
+        offeredButtonCenter = offeredButton.center
+        logoutButtonCenter = logoutButton.center
     }
     
     func setupAnimation() {
@@ -156,11 +167,17 @@ class ViewController: UIViewController {
             
             if let dictionary = snapshot.value as? [String : Any] {
                 let user = User(dictionary: dictionary)
+                self.userRole = dictionary["role"] as? String
                 user.uid = snapshot.key
-                if(user.uid == FIRAuth.auth()?.currentUser?.uid) {
+                
+                if self.userRole == "tutee" {
+                    
+                    self.tutorUsers.append(user)
+                    self.users = self.tutorUsers
                     
                 } else {
-                    self.users.append(user)
+                    self.tuteeUsers.append(user)
+                     self.users = self.tuteeUsers
                 }
                 
                 DispatchQueue.main.async(execute: { 
@@ -193,6 +210,7 @@ extension ViewController : UITableViewDataSource {
         cell.nameLabel.text = user.name
         cell.locationLabel.text = user.location
         cell.priceRangeLabel.text = user.price
+        cell.subjectLabel.text = user.firstSub
         return cell
     }
     

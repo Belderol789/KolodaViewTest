@@ -47,11 +47,7 @@ class ImageViewController: UIViewController {
     @IBAction func backButtonTapped(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        guard let chatController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else {return}
-//        present(chatController, animated: true, completion: nil)
-       
+
         
     }
 

@@ -23,6 +23,10 @@ class User {
     var thirdSub : String? //12
     var rating : String? //13
     var role : String? //14
+    var offeredTo : String?
+    var offeredBy : String?
+    var schedule : String?
+
     
     init() {
         uid = ""
@@ -39,6 +43,9 @@ class User {
         thirdSub = "Optional"
         rating = ""
         role = ""
+        offeredTo = ""
+        offeredBy = ""
+        schedule = ""
     }
     
     init(dictionary: [String: Any]) {
@@ -56,6 +63,9 @@ class User {
         self.thirdSub = dictionary["thirdSubject"] as? String
         self.rating = dictionary["rating"] as? String
         self.role = dictionary["role"] as? String
+        self.offeredBy = dictionary["offeredBy"] as? String
+        self.offeredTo = dictionary["offeredTo"] as? String
+        self.schedule = dictionary["schedule"] as? String
         
         //self.numberOfPosts = dictionary["numberOfPosts"] as? String
     }

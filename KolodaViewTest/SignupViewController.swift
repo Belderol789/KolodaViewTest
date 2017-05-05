@@ -66,8 +66,15 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!{
         didSet{
             textView.layer.borderColor = UIColor.black.cgColor
-            textView.textViewDidBeginEditing(textView: textView, text: "Say something about yourself!")
-            textView.textViewDidEndEditing(textView: textView, text: "Say something about yourself!")
+            textView.text = "Say something about yourself!"
+            textView.textColor = .lightGray
+            textView.isUserInteractionEnabled = true
+            
+        }
+    }
+    @IBOutlet weak var backButton: UIButton!{
+        didSet{
+            backButton.curveEdges()
         }
     }
     @IBOutlet weak var signupButton: UIButton!
@@ -119,6 +126,19 @@ class SignupViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    @IBAction func removeTextViewText(_ sender: Any) {
+        
+        if textView.text == "Say something about yourself!" {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        
+        
+    }
+    @IBAction func backButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
         if let viewWithTag = self.view.viewWithTag(100) {
@@ -134,9 +154,6 @@ class SignupViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    @IBAction func backButtonTapped(_ sender: Any) {
-         self.dismiss(animated: true, completion: nil)
-    }
 
     @IBAction func signupButtonTapped(_ sender: Any) {
         guard let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text, let gender = genderTextField.text, let age = ageTextField.text, let name = nameTextField.text, let location = locationTextField.text, let subject = firstSubTextField.text, let secondSubject = secondSubTextField.text, let thirdSubject = thirdSubTextField.text else {return}

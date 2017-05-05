@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
     var currentUser : FIRUser? = FIRAuth.auth()?.currentUser
     var saveIconCenter : CGPoint!
     var backButtonCenter : CGPoint!
+    var roleButtonCenter : CGPoint!
 
     @IBOutlet weak var editButton: UIButton!{
         didSet {
@@ -77,16 +78,14 @@ class ProfileViewController: UIViewController {
         didSet{
             locationTextView.layer.borderColor = UIColor.orange.cgColor
             locationTextView.layer.borderWidth = 1.0
-            locationTextView.textViewDidBeginEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
-            locationTextView.textViewDidEndEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
+            locationTextView.text = "Where would you like to meetup?"
         }
     }
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
             descTextView.layer.borderWidth = 1.0
             descTextView.layer.borderColor = UIColor.orange.cgColor
-            descTextView.textViewDidBeginEditing(textView: descTextView, text: "Say something about yourself!")
-            descTextView.textViewDidEndEditing(textView: descTextView, text: "Say something about yourself!")
+            descTextView.text = "Say something about yourself!"
         }
     }
     @IBOutlet weak var nameLabel: UILabel!
@@ -114,7 +113,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.backButtonCenter = self.backButton.center
+        checkTextViews()
+        self.roleButtonCenter = self.changeRoleButton.center
         self.saveIconCenter = self.saveButton.center
         listenToFirebase()
         setupProfile()
@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController {
     
     
     func setupUI() {
-        self.backButton.center = self.editButton.center
+        self.changeRoleButton.center = self.editButton.center
         self.saveButton.center = self.editButton.center
         priceTextField.isUserInteractionEnabled = false
         firstTextField.isUserInteractionEnabled = false
@@ -166,9 +166,65 @@ class ProfileViewController: UIViewController {
         goToPage(page: "ViewController")
     }
     
+    
     @IBAction func changeRoleTapped(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.roleView.alpha = 0.95
+        })
+    }
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+       dismissView()
+
+    }
+    @IBAction func tutorButtonTapped(_ sender: Any) {
+        tuteeButton.isUserInteractionEnabled = false
+        FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutor"])
+        dismissView()
+
+    }
+    @IBAction func tuteeButtonTapped(_ sender: Any) {
+        tutorButton.isUserInteractionEnabled = false
+        FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutee"])
+        dismissView()
+    }
+    
+    func dismissView() {
+        if let viewWithTag = self.view.viewWithTag(99) {
+            print("Tag 99")
+            viewWithTag.removeFromSuperview()
+        }
+        else {
+            print("tag not found")
+        }
+    }
+    
+    @IBAction func locationPlaceHolder(_ sender: Any) {
+        if locationTextView.text == "Where would you like to meetup?" {
+            locationTextView.text = ""
+            locationTextView.textColor = .black
+        }
         
     }
+    @IBAction func descPlaceHolder(_ sender: Any) {
+        if locationTextView.text == "Say something about yourself!" {
+            locationTextView.text = ""
+            locationTextView.textColor = .black
+        }
+    }
+    
+    func checkTextViews() {
+        if locationTextView.text == "" {
+            locationTextView.text = "Where would you like to meetup?"
+            locationTextView.textColor = .lightGray
+        }
+        
+        if descTextView.text == "" {
+            descTextView.text = "Say something about yourself!"
+            descTextView.textColor = .lightGray
+        }
+    }
+    
+    
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let updatedLocation = locationTextView.text,
@@ -209,10 +265,7 @@ class ProfileViewController: UIViewController {
         
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(profilePictureValue)
     }
-    
-    
 
-    
     func handleImage(){
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(chooseProfileImage))
@@ -267,7 +320,7 @@ class ProfileViewController: UIViewController {
             self.handleImage()
             
             UIView.animate(withDuration: 0.3, animations: {
-                self.backButton.center = self.backButtonCenter
+                self.changeRoleButton.center = self.roleButtonCenter
                 self.saveButton.center = self.saveIconCenter
             })
            

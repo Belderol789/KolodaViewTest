@@ -27,11 +27,9 @@ class OfferViewController: UIViewController {
     var currentSchedule : String? = ""
     
     @IBOutlet weak var priceTextField: UITextField!
-    @IBOutlet weak var locationTextView: UITextView!
-        {
+    @IBOutlet weak var locationTextView: UITextView!{
         didSet{
-            locationTextView.textViewDidBeginEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
-            locationTextView.textViewDidEndEditing(textView: locationTextView, text: "Where would you prefer to meetup?")
+            locationTextView.text = "Where would you like to meetup?"
         }
     }
     @IBOutlet weak var subjectTextField: UITextField!
@@ -79,6 +77,22 @@ class OfferViewController: UIViewController {
         
         selectedUserFirebase()
         
+        
+    }
+    @IBAction func locationPlaceHolder(_ sender: Any) {
+        if locationTextView.text == "Where would you like to meetup?" {
+            locationTextView.text = ""
+            locationTextView.textColor = .black
+        }
+        
+    }
+    
+    
+    func checkTextView() {
+        if locationTextView.text == "" {
+            locationTextView.text = "Where would you like to meetup?"
+            locationTextView.textColor = .lightGray
+        }
     }
     
     func addAlertAndAction(title: String, message: String, actionTitle: String)
@@ -98,9 +112,6 @@ class OfferViewController: UIViewController {
     @IBAction func offerButtonTapped(_ sender: Any) {
         
         setupUpdatedData()
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        //guard let offeredPage = storyboard.instantiateViewController(withIdentifier: "OfferedViewController") as? OfferedViewController else {return}
-        //present(offeredPage, animated: true, completion: nil)
  
     }
     
@@ -122,6 +133,10 @@ class OfferViewController: UIViewController {
         let offer : [String : Any] = ["offeredBy": currentUserID ?? "Anonymous", "offeredTo" : selectedUser?.uid ?? "Anonymous", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice!, "location" : currentLocation!, "subject" : currentSubject!, "schedule" : currentSchedule!, "status": "nil"]
         
         FIRDatabase.database().reference().child("offers").childByAutoId().updateChildValues(offer)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        guard let offeredPage = storyboard.instantiateViewController(withIdentifier: "OfferedViewController") as? OfferedViewController else {return}
+        present(offeredPage, animated: true, completion: nil)
         
         
     }

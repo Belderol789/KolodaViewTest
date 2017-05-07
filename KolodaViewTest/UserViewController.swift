@@ -26,7 +26,6 @@ class UserViewController: UIViewController {
     var profileThirdSub : String? = ""
     var offerButtonCenter : CGPoint!
     var messageButtonCenter : CGPoint!
-    var saveButtonCenter : CGPoint!
     var backButtonCenter : CGPoint!
     var currentUserEmail: String? = ""
     var currentUserID: String? = ""
@@ -140,7 +139,6 @@ class UserViewController: UIViewController {
         
         listenToFireBase()
         messageButtonCenter = messageButton.center
-        saveButtonCenter = saveButton.center
         offerButtonCenter = offerButton.center
         backButtonCenter = backButton.center
         
@@ -158,7 +156,6 @@ class UserViewController: UIViewController {
     func setupAnimation() {
         offerButton.center = moreButton.center
         messageButton.center = moreButton.center
-        saveButton.center = moreButton.center
         backButton.center = moreButton.center
     }
     
@@ -230,14 +227,12 @@ class UserViewController: UIViewController {
             UIView.animate(withDuration: 0.3, animations: {
                 self.messageButton.center = self.messageButtonCenter
                 self.offerButton.center = self.offerButtonCenter
-                self.saveButton.center = self.saveButtonCenter
                 self.backButton.center = self.backButtonCenter
             })
         } else {
             moreButton.setBackgroundImage(#imageLiteral(resourceName: "moreButton"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 self.messageButton.center = self.moreButton.center
-                self.saveButton.center = self.moreButton.center
                 self.offerButton.center = self.moreButton.center
                 self.backButton.center = self.moreButton.center
             })

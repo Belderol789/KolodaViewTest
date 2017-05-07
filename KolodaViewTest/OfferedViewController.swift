@@ -33,13 +33,13 @@ class OfferedViewController: UIViewController {
             
         }
     }
-    @IBOutlet weak var secondTableView: UITableView!{
-        didSet{
-            secondTableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
-            secondTableView.delegate = self
-            secondTableView.delegate = self
-        }
-    }
+//    @IBOutlet weak var secondTableView: UITableView!{
+//        didSet{
+//            secondTableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
+//            secondTableView.delegate = self
+//            secondTableView.delegate = self
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchOfferedUser()
@@ -53,30 +53,17 @@ class OfferedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         firstTableView.reloadData()
-        secondTableView.reloadData()
+    
     }
     @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
-        switch  offerSegmentedControl.selectedSegmentIndex {
-        case 0:
-            firstTableView.isHidden = false
-            secondTableView.isHidden = true
+        firstTableView.reloadData()
         
-
-            
-        case 1:
-            firstTableView.isHidden = true
-            secondTableView.isHidden = false
-         
-
-        default:
-            break
-        }
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let viewController = storyboard.instantiateViewController(withIdentifier: "ViewController")
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
         present(viewController, animated: true, completion: nil)
         
     }
@@ -97,7 +84,7 @@ class OfferedViewController: UIViewController {
                 self.currentUserName = dictionary["myName"] as? String
                 self.offeredToID = dictionary["offeredTo"] as? String
                 
-                if FIRAuth.auth()?.currentUser?.uid == currentUserID {
+              
                     
                     let newUser = User()
                     newUser.location = self.offerLocation
@@ -108,27 +95,28 @@ class OfferedViewController: UIViewController {
                     newUser.name = self.offerName
                     newUser.offeredBy = self.currentUserName
                     
-                
-                    self.users.append(newUser)
+                  if FIRAuth.auth()?.currentUser?.uid == currentUserID {
+                    
+                     self.users.append(newUser)
+                  
                     
                 } else if FIRAuth.auth()?.currentUser?.uid == self.offeredToID {
                     
-                    let newUser = User()
-                    newUser.location = self.offerLocation
-                    newUser.schedule = self.offerSchedule
-                    newUser.price = self.offerPrice
-                    newUser.firstSub = self.offerSubject
-                    newUser.profileImageUrl = self.offeresImage
-                    newUser.name = self.offerName
-                    newUser.offeredBy = self.currentUserName
-                    
+//                    let newUser = User()
+//                    newUser.location = self.offerLocation
+//                    newUser.schedule = self.offerSchedule
+//                    newUser.price = self.offerPrice
+//                    newUser.firstSub = self.offerSubject
+//                    newUser.profileImageUrl = self.offeresImage
+//                    newUser.name = self.offerName
+//                    newUser.offeredBy = self.currentUserName
+//                    
                     self.secondUsers.append(newUser)
-
+                    
                 }
 
                 DispatchQueue.main.async(execute: {
                     self.firstTableView.reloadData()
-                   // self.secondTableView.reloadData()
                     
                 })
                 
@@ -148,20 +136,30 @@ extension OfferedViewController : UITableViewDelegate {
 extension OfferedViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var count : Int?
-        
-        if tableView == self.firstTableView {
-             count = users.count
+        var numberOfUsers = 0
+        switch (offerSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            numberOfUsers = users.count
+        case 1:
+            numberOfUsers = secondUsers.count
+        default:
+            break
         }
         
-        if tableView == self.secondTableView {
-            
-            count = secondUsers.count
-        }
+        return numberOfUsers
+
+//        if (tableNumber == 1) {
+//            numberOfUsers = users.count
+//            return numberOfUsers
+//            
+//        } else if (tableNumber == 2) {
+//            numberOfSecondUsers = secondUsers.count
+//            return numberOfSecondUsers
+//        } else {
+//            return 0
+//        }
         
-        return count!
-       
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -169,48 +167,69 @@ extension OfferedViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell else {return UITableViewCell()}
         
-        var cell : OfferedTableViewCell?
         
-        if tableView == self.firstTableView {
-            cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell
-            
+        switch (offerSegmentedControl.selectedSegmentIndex) {
+        case 0:
             let currentUser = users[indexPath.row]
-
-            cell!.nameLabel.text = currentUser.name
-            cell!.locationTextView.text = currentUser.location
-            cell!.priceLabel.text = currentUser.price! + "/hr"
-            cell!.subjectLabel.text = currentUser.firstSub
-            cell!.scheduleLabel.text = currentUser.schedule
+            cell.nameLabel.text = currentUser.name
+            cell.locationTextView.text = currentUser.location
+            cell.priceLabel.text = currentUser.price! + "/hr"
+            cell.subjectLabel.text = currentUser.firstSub
+            cell.scheduleLabel.text = currentUser.schedule
             if let profileImageUrl = currentUser.profileImageUrl {
                 print("userImage: ",currentUser.profileImageUrl ?? "")
-                cell!.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
             }
-            
+            break
+        case 1:
+            let currentSecondUser = secondUsers[indexPath.row]
+            cell.nameLabel.text = currentSecondUser.offeredBy
+            cell.locationTextView.text = currentSecondUser.location
+            cell.priceLabel.text = currentSecondUser.price! + "/hr"
+            cell.subjectLabel.text = currentSecondUser.firstSub
+            cell.scheduleLabel.text = currentSecondUser.schedule
+            if let profileImageUrl = currentSecondUser.profileImageUrl {
+                print("userImage: ",currentSecondUser.profileImageUrl ?? "")
+                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+            }
+            break
+        default:
+            break
         }
         
-        if tableView == self.secondTableView {
-            
-             cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell
-            
-            let currentUser = secondUsers[indexPath.row]
-            
-            
-            cell!.nameLabel.text = currentUser.offeredBy
-            cell!.locationTextView.text = currentUser.location
-            cell!.priceLabel.text = "\(currentUser.price) /hr"
-            cell!.subjectLabel.text = currentUser.firstSub
-            cell!.scheduleLabel.text = currentUser.schedule
-            if let profileImageUrl = currentUser.profileImageUrl {
-                print("userImage: ",currentUser.profileImageUrl ?? "")
-                cell!.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
-            }
 
-        }
-        
-        
-        return cell!
+//        if (tableNumber == 1) {
+//         
+//            let currentUser = users[indexPath.row]
+//            cell.nameLabel.text = currentUser.name
+//            cell.locationTextView.text = currentUser.location
+//            cell.priceLabel.text = currentUser.price! + "/hr"
+//            cell.subjectLabel.text = currentUser.firstSub
+//            cell.scheduleLabel.text = currentUser.schedule
+//            if let profileImageUrl = currentUser.profileImageUrl {
+//                print("userImage: ",currentUser.profileImageUrl ?? "")
+//                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+//            }
+//
+//        } else if (tableNumber == 2) {
+//       
+//            let currentSecondUser = secondUsers[indexPath.row]
+//            cell.nameLabel.text = currentSecondUser.offeredBy
+//            cell.locationTextView.text = currentSecondUser.location
+//            cell.priceLabel.text = currentSecondUser.price! + "/hr"
+//            cell.subjectLabel.text = currentSecondUser.firstSub
+//            cell.scheduleLabel.text = currentSecondUser.schedule
+//            if let profileImageUrl = currentSecondUser.profileImageUrl {
+//                print("userImage: ",currentSecondUser.profileImageUrl ?? "")
+//                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+//            }
+//
+//        }
       
+        return cell
     }
 
 }

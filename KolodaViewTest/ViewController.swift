@@ -176,8 +176,7 @@ class ViewController: UIViewController {
                 user.uid = snapshot.key
                 
                 if user.uid != FIRAuth.auth()?.currentUser?.uid {
-                    if self.userRole == "tutee" {
-                        
+                    if self.userRole == "tutor" {
                         self.tutorUsers.append(user)
                         self.users = self.tutorUsers
                         

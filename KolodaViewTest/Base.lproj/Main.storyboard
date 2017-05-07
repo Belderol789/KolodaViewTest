@@ -789,7 +789,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YQV-0v-wv0" id="mWB-kM-qJq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1083,16 +1083,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLC-we-F4x">
-                                        <rect key="frame" x="210" y="285" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" backgroundImage="messageIcon"/>
-                                        <connections>
-                                            <action selector="chatClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="pEc-Q2-P3W"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiV-70-DMW">
                                         <rect key="frame" x="89" y="343" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1106,16 +1096,8 @@
                                             <action selector="chatClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="q35-xJ-CEx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCG-hm-ovn">
-                                        <rect key="frame" x="235" y="343" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="Save"/>
-                                        <connections>
-                                            <action selector="saveClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="P1f-Rh-XOB"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAf-iD-mdO">
-                                        <rect key="frame" x="115" y="285" width="50" height="50"/>
+                                        <rect key="frame" x="162" y="284" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" backgroundImage="offerButton"/>
@@ -1129,6 +1111,16 @@
                                         <state key="normal" backgroundImage="moreButton"/>
                                         <connections>
                                             <action selector="moreClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="F43-2X-bf1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLC-we-F4x">
+                                        <rect key="frame" x="234" y="343" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" backgroundImage="messageIcon"/>
+                                        <connections>
+                                            <action selector="chatClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="pEc-Q2-P3W"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1167,7 +1159,6 @@
                         <outlet property="offerButton" destination="IAf-iD-mdO" id="HM2-i5-dXU"/>
                         <outlet property="priceLabel" destination="dte-d9-Zj8" id="df4-Iz-oJ5"/>
                         <outlet property="profileView" destination="4sh-Bx-yH6" id="4v2-ug-9rc"/>
-                        <outlet property="saveButton" destination="VCG-hm-ovn" id="fZS-al-lux"/>
                         <outlet property="secondLabel" destination="8Gg-68-GZJ" id="Ahk-wx-Knd"/>
                         <outlet property="thirdLabel" destination="XdW-bv-gPA" id="ZPN-Zc-i4X"/>
                     </connections>
@@ -1204,9 +1195,8 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6pn-kk-TXO">
                                 <rect key="frame" x="0.0" y="64" width="375" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
+                                    <segment title="Offered To"/>
+                                    <segment title="Offered By"/>
                                 </segments>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1215,11 +1205,6 @@
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oN5-mT-VVG">
                                 <rect key="frame" x="0.0" y="100" width="375" height="567"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jjf-ex-mww">
-                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
@@ -1240,7 +1225,6 @@
                     <connections>
                         <outlet property="firstTableView" destination="oN5-mT-VVG" id="DPA-I1-a0K"/>
                         <outlet property="offerSegmentedControl" destination="6pn-kk-TXO" id="zZG-zN-AnA"/>
-                        <outlet property="secondTableView" destination="jjf-ex-mww" id="9y2-TQ-cpG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xAB-8d-oeB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1267,7 +1251,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cKI-lN-Vcz" id="a9e-3M-N5I">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1275,7 +1259,7 @@
                                         <rect key="frame" x="0.0" y="115" width="375" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5uX-8B-J06" id="Grf-zb-Rnf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

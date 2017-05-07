@@ -15,12 +15,15 @@ class UserViewController: UIViewController {
     var otherUserID : String = ""
     var profileName : String? = ""
     var profileLocation : String? = ""
-    var profilePrice : String? = ""
+    var profilePrice : String! = ""
     var profileAge : String? = ""
     var profileGender : String? = ""
     var profileDesc : String? = ""
     var profileImage : String? = ""
     var profileEmail : String? = ""
+    var profileFirstSub : String? = ""
+    var profileSecondSub : String? = ""
+    var profileThirdSub : String? = ""
     var offerButtonCenter : CGPoint!
     var messageButtonCenter : CGPoint!
     var saveButtonCenter : CGPoint!
@@ -171,6 +174,10 @@ class UserViewController: UIViewController {
             self.profilePrice = dictionary?["price"] as? String
             self.profileLocation = dictionary?["location"] as? String
             self.profileEmail = dictionary?["email"] as? String
+            self.profileFirstSub = dictionary?["subject"] as? String
+            self.profileSecondSub = dictionary?["secondSubject"] as? String
+            self.profileThirdSub = dictionary?["thirdSubject"] as? String
+            
             
             
             self.setUpProfile()
@@ -202,7 +209,10 @@ class UserViewController: UIViewController {
         ageLabel.text = profileAge
         locationLabel.text = profileLocation
         genderLabel.text = profileGender
-        priceLabel.text = profilePrice
+        priceLabel.text = "\(profilePrice!) /hr"
+        firstLabel.text = profileFirstSub
+        secondLabel.text = profileSecondSub
+        thirdLabel.text = profileThirdSub
         
         
         if let profileURL = profileImage {

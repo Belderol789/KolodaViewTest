@@ -161,10 +161,10 @@ class ProfileViewController: UIViewController {
         appDelegate.window?.rootViewController = gameScene
         
     }
-    
-    @IBAction func backButtonPressed(_ sender: Any) {
-        goToPage(page: "ViewController")
+    @IBAction func backButtonTapped(_ sender: Any) {
+         goToPage(page: "ViewController")
     }
+    
     
     
     @IBAction func changeRoleTapped(_ sender: Any) {
@@ -300,10 +300,8 @@ class ProfileViewController: UIViewController {
         })
     }
     
-    @IBAction func backButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-   
+  
+ 
     @IBAction func editButtonTapped(_ sender: UIButton) {
         if editButton.currentBackgroundImage == #imageLiteral(resourceName: "editButtonOff") {
             editButton.setBackgroundImage(#imageLiteral(resourceName: "editButton"), for: .normal)
@@ -333,7 +331,7 @@ class ProfileViewController: UIViewController {
             editLabel.text = "Done"
             
             UIView.animate(withDuration: 0.3, animations: {
-                self.backButton.center = self.editButton.center
+                self.changeRoleButton.center = self.editButton.center
                 self.saveButton.center = self.editButton.center
             })
            

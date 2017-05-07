@@ -82,7 +82,6 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!{
         didSet{
-            cancelButton.circlerImage()
             cancelButton.layer.borderColor = UIColor.black.cgColor
             cancelButton.layer.borderWidth = 1.0
         }

@@ -19,6 +19,7 @@ class OfferViewController: UIViewController {
         }
     }
     var currentUser : FIRUser!
+    var myUserName : String? = ""
     var currentUserID : String? = ""
     var currentUserImageUrl : String? = ""
     var currentPrice : String? = ""
@@ -134,9 +135,10 @@ class OfferViewController: UIViewController {
         
         //let offerID = (selectedUser?.uid)!
         
-        let offer : [String : Any] = ["offeredBy": currentUserID ?? "Anonymous", "offeredTo" : selectedUser?.uid ?? "Anonymous", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice!, "location" : currentLocation!, "subject" : currentSubject!, "schedule" : currentSchedule!, "status": "nil"]
+        let offer : [String : Any] = ["offeredBy": currentUserID ?? "No ID", "offeredTo" : selectedUser?.uid ?? "No ID", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice ?? "No Price", "location" : currentLocation ?? "No location", "subject" : currentSubject ?? "No subject", "schedule" : currentSchedule ?? "No Schedule", "name" : selectedUser?.name ?? "Anonymous", "myName" : myUserName ?? "No name"]
         
         FIRDatabase.database().reference().child("offers").childByAutoId().updateChildValues(offer)
+        
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let offeredPage = storyboard.instantiateViewController(withIdentifier: "OfferedViewController") as? OfferedViewController else {return}
@@ -151,6 +153,7 @@ class OfferViewController: UIViewController {
             let dictionary = snapshot.value as? [String : Any]
             self.currentUserID = dictionary?["uid"] as? String
             self.currentUserImageUrl = dictionary?["profileImageUrl"] as? String
+            self.myUserName = dictionary?["name"] as? String
             
         })
     }

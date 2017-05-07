@@ -11,37 +11,74 @@ import Firebase
 
 class OfferedViewController: UIViewController {
     
-    var offeredToID : String = ""
+    @IBOutlet weak var offerSegmentedControl: UISegmentedControl!
+    var offeredToID : String? = ""
     var offerLocation : String? = ""
     var offeresImage : String? = ""
     var offerPrice : String? = ""
     var offerSchedule : String? = ""
     var offerSubject : String? = ""
     var offerName : String? = ""
+    var currentUserName : String? = ""
     var users : [User] = []
+    var secondUsers : [User] = []
 
     var ref : FIRDatabaseReference!
 
-    @IBOutlet weak var tableView: UITableView!{
+    @IBOutlet weak var firstTableView: UITableView!{
         didSet{
-            tableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
-            tableView.delegate = self
-            tableView.dataSource = self
+            firstTableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
+            firstTableView.delegate = self
+            firstTableView.dataSource = self
             
+        }
+    }
+    @IBOutlet weak var secondTableView: UITableView!{
+        didSet{
+            secondTableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
+            secondTableView.delegate = self
+            secondTableView.delegate = self
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchOfferedUser()
-     
-        
 
-       
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        firstTableView.reloadData()
+        secondTableView.reloadData()
+    }
+    @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
+        switch  offerSegmentedControl.selectedSegmentIndex {
+        case 0:
+            firstTableView.isHidden = false
+            secondTableView.isHidden = true
+        
+
+            
+        case 1:
+            firstTableView.isHidden = true
+            secondTableView.isHidden = false
+         
+
+        default:
+            break
+        }
+    }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ViewController")
+        dismiss(animated: true, completion: nil)
+        present(viewController, animated: true, completion: nil)
+        
     }
     
     func fetchOfferedUser() {
@@ -57,6 +94,8 @@ class OfferedViewController: UIViewController {
                 self.offeresImage = dictionary["offeresImage"] as? String
                 self.offerSubject = dictionary["subject"] as? String
                 self.offerName = dictionary["name"] as? String
+                self.currentUserName = dictionary["myName"] as? String
+                self.offeredToID = dictionary["offeredTo"] as? String
                 
                 if FIRAuth.auth()?.currentUser?.uid == currentUserID {
                     
@@ -67,16 +106,29 @@ class OfferedViewController: UIViewController {
                     newUser.firstSub = self.offerSubject
                     newUser.profileImageUrl = self.offeresImage
                     newUser.name = self.offerName
+                    newUser.offeredBy = self.currentUserName
                     
-                    
+                
                     self.users.append(newUser)
                     
+                } else if FIRAuth.auth()?.currentUser?.uid == self.offeredToID {
                     
+                    let newUser = User()
+                    newUser.location = self.offerLocation
+                    newUser.schedule = self.offerSchedule
+                    newUser.price = self.offerPrice
+                    newUser.firstSub = self.offerSubject
+                    newUser.profileImageUrl = self.offeresImage
+                    newUser.name = self.offerName
+                    newUser.offeredBy = self.currentUserName
+                    
+                    self.secondUsers.append(newUser)
+
                 }
-                
-                
+
                 DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
+                    self.firstTableView.reloadData()
+                   // self.secondTableView.reloadData()
                     
                 })
                 
@@ -84,12 +136,9 @@ class OfferedViewController: UIViewController {
             }
 
         })
-        
-            
+   
     }
-    
-    
-  
+
 }
 
 extension OfferedViewController : UITableViewDelegate {
@@ -100,26 +149,68 @@ extension OfferedViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        var count : Int?
         
-        return users.count
+        if tableView == self.firstTableView {
+             count = users.count
+        }
+        
+        if tableView == self.secondTableView {
+            
+            count = secondUsers.count
+        }
+        
+        return count!
+       
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell else {return UITableViewCell()}
         
-        let currentUser = users[indexPath.row]
+        var cell : OfferedTableViewCell?
         
-        cell.nameLabel.text = currentUser.name
-        cell.locationTextView.text = currentUser.location
-        cell.priceLabel.text = currentUser.price
-        cell.subjectLabel.text = currentUser.firstSub
-        cell.scheduleLabel.text = currentUser.schedule
+        if tableView == self.firstTableView {
+            cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell
+            
+            let currentUser = users[indexPath.row]
 
+            cell!.nameLabel.text = currentUser.name
+            cell!.locationTextView.text = currentUser.location
+            cell!.priceLabel.text = currentUser.price! + "/hr"
+            cell!.subjectLabel.text = currentUser.firstSub
+            cell!.scheduleLabel.text = currentUser.schedule
+            if let profileImageUrl = currentUser.profileImageUrl {
+                print("userImage: ",currentUser.profileImageUrl ?? "")
+                cell!.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+            }
+            
+        }
         
-        return cell
+        if tableView == self.secondTableView {
+            
+             cell = tableView.dequeueReusableCell(withIdentifier: OfferedTableViewCell.cellIdentifier, for: indexPath) as? OfferedTableViewCell
+            
+            let currentUser = secondUsers[indexPath.row]
+            
+            
+            cell!.nameLabel.text = currentUser.offeredBy
+            cell!.locationTextView.text = currentUser.location
+            cell!.priceLabel.text = "\(currentUser.price) /hr"
+            cell!.subjectLabel.text = currentUser.firstSub
+            cell!.scheduleLabel.text = currentUser.schedule
+            if let profileImageUrl = currentUser.profileImageUrl {
+                print("userImage: ",currentUser.profileImageUrl ?? "")
+                cell!.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+            }
+
+        }
+        
+        
+        return cell!
+      
     }
-    
-    
-    
-    
+
 }

@@ -74,6 +74,11 @@ class ViewController: UIViewController {
        
     }
     
+    @IBAction func offerButtonTapped(_ sender: Any) {
+        
+        goToPage(page: "OfferedViewController")
+        
+    }
     
     func setupButtonCenters() {
         profileButtonCenter = profileButton.center
@@ -170,16 +175,18 @@ class ViewController: UIViewController {
                 self.userRole = dictionary["role"] as? String
                 user.uid = snapshot.key
                 
-                if self.userRole == "tutee" {
-                    
-                    self.tutorUsers.append(user)
-                    self.users = self.tutorUsers
-                    
-                } else {
-                    self.tuteeUsers.append(user)
-                     self.users = self.tuteeUsers
+                if user.uid != FIRAuth.auth()?.currentUser?.uid {
+                    if self.userRole == "tutee" {
+                        
+                        self.tutorUsers.append(user)
+                        self.users = self.tutorUsers
+                        
+                    } else {
+                        self.tuteeUsers.append(user)
+                        self.users = self.tuteeUsers
+                    }
+
                 }
-                
                 DispatchQueue.main.async(execute: { 
                     self.userTableView.reloadData()
                 })

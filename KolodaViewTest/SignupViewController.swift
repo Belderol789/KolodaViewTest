@@ -22,47 +22,15 @@ class SignupViewController: UIViewController {
             
         }
     }
-    @IBOutlet weak var firstSubTextField: UITextField!{
-        didSet {
-            firstSubTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var secondSubTextField: UITextField!{
-        didSet{
-            secondSubTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var thirdSubTextField: UITextField!{
-        didSet{
-            thirdSubTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
+    @IBOutlet weak var firstSubTextField: UITextField!
+    @IBOutlet weak var secondSubTextField: UITextField!
+    @IBOutlet weak var thirdSubTextField: UITextField!
     @IBOutlet weak var choiceView: UIView!
-    @IBOutlet weak var emailTextField: UITextField!{
-        didSet {
-            emailTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var passwordTextField: UITextField!{
-        didSet{
-            passwordTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var confirmPasswordTextField: UITextField!{
-        didSet{
-            confirmPasswordTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var genderTextField: UITextField!{
-        didSet{
-            genderTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var ageTextField: UITextField!{
-        didSet{
-            ageTextField.layer.borderColor = UIColor.black.cgColor
-        }
-    }
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var genderTextField: UITextField!
+    @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var textView: UITextView!{
         didSet{
             textView.layer.borderColor = UIColor.black.cgColor
@@ -72,15 +40,10 @@ class SignupViewController: UIViewController {
             
         }
     }
-    @IBOutlet weak var backButton: UIButton!{
-        didSet{
-            backButton.curveEdges()
-        }
-    }
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
- 
     @IBOutlet weak var tutorButton: UIButton!{
         didSet{
             tutorButton.circlerImage()
@@ -91,18 +54,8 @@ class SignupViewController: UIViewController {
             tuteeButton.circlerImage()
         }
     }
-    @IBOutlet weak var detailView: UIView! {
-        didSet {
-            detailView.layer.borderWidth = 1.0
-            detailView.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-    @IBOutlet weak var credentialView: UIView! {
-        didSet {
-            credentialView.layer.borderWidth = 1.0
-            credentialView.layer.borderColor = UIColor.black.cgColor
-        }
-    }
+    @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var credentialView: UIView!
     
 
     override func viewDidLoad() {
@@ -116,13 +69,7 @@ class SignupViewController: UIViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
     @IBAction func removeTextViewText(_ sender: Any) {
-        
         if textView.text == "Say something about yourself!" {
             textView.text = ""
             textView.textColor = .black
@@ -130,25 +77,13 @@ class SignupViewController: UIViewController {
         
         
     }
-    @IBAction func backButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
-        if let viewWithTag = self.view.viewWithTag(100) {
-            print("Tag 100")
-            viewWithTag.removeFromSuperview()
-        }
-        else {
-            print("tag not found")
-        }
+         goToPage(page: "LoginViewController")
+        
     }
+  
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-
     @IBAction func signupButtonTapped(_ sender: Any) {
         guard let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text, let gender = genderTextField.text, let age = ageTextField.text, let name = nameTextField.text, let location = locationTextField.text, let subject = firstSubTextField.text, let secondSubject = secondSubTextField.text, let thirdSubject = thirdSubTextField.text else {return}
         
@@ -188,11 +123,10 @@ class SignupViewController: UIViewController {
                         return
                     }
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject, "rating" : "0", "role" : self.role ?? "none"] as [String : Any]
+                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject, "rating" : "0", "role" : self.role ?? "none", "review" : "nil"] as [String : Any]
                         self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
                         self.id = uid
                         self.chooseRoleView()
-                        //self.goToPage(page: "ViewController")
                     }
                 })
             }
@@ -214,12 +148,13 @@ class SignupViewController: UIViewController {
         })
     }
 
-    
     func setupUI() {
-        signupButton.layer.borderWidth = 1.0
-        signupButton.layer.borderColor = UIColor.orange.cgColor
+    
         signupButton.layer.cornerRadius = 20
         signupButton.layer.masksToBounds = true
+   
+        cancelButton.layer.cornerRadius = 20
+        cancelButton.layer.masksToBounds = true
     }
 
     func handleImage() {

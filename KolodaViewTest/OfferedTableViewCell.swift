@@ -24,7 +24,11 @@ class OfferedTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var scheduleLabel: UILabel!
-    @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var locationTextView: UITextView!{
+        didSet{
+            locationTextView.isUserInteractionEnabled = false
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         

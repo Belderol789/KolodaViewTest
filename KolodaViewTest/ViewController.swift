@@ -10,11 +10,21 @@ import UIKit
 import Firebase
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
     
+
+       
+    @IBOutlet weak var kolodaImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var scheduleLabel: UILabel!
+    @IBOutlet weak var subjectLabel: UILabel!
+    @IBOutlet weak var locationTextView: UITextView!
+
     var tutorUsers = [User]()
     var tuteeUsers = [User]()
     var users = [User]()
+    var filteredUsers = [User]()
     var profileButtonCenter : CGPoint!
     var offeredButtonCenter : CGPoint!
     var savedButtonCenter : CGPoint!
@@ -60,9 +70,10 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         currentUserId = FIRAuth.auth()?.currentUser?.uid
         fetchUser()
+        setupSearchBar()
         setupButtonCenters()
         setupAnimation()
  
@@ -73,6 +84,31 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
        
     }
+    
+    func  setupSearchBar() {
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width), height: 70))
+        searchBar.delegate = self
+        self.userTableView.tableHeaderView = searchBar
+        self.userTableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredUsers = users
+            self.userTableView.reloadData()
+        }else {
+            filterTableView(text: searchText)
+        }
+    }
+    
+    func filterTableView(text:String) {
+        filteredUsers = users.filter({ (user) -> Bool in
+            return (user.name?.lowercased().contains(text.lowercased()))! || (user.firstSub?.lowercased().contains(text.lowercased()))! || (user.location?.lowercased().contains(text.lowercased()))!
+        })
+        self.userTableView.reloadData()
+        
+    }
+
     
     @IBAction func offerButtonTapped(_ sender: Any) {
         
@@ -164,6 +200,7 @@ class ViewController: UIViewController {
         appDelegate.window?.rootViewController = gameScene
         
     }
+    
 
     
     
@@ -186,8 +223,10 @@ class ViewController: UIViewController {
                     }
 
                 }
-                DispatchQueue.main.async(execute: { 
+                DispatchQueue.main.async(execute: {
+                    self.filteredUsers = self.users
                     self.userTableView.reloadData()
+                    
                 })
                 
             }
@@ -197,18 +236,15 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController : UITableViewDelegate {
-    
-}
 
-extension ViewController : UITableViewDataSource {
+extension ViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return filteredUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.cellIdentifier, for: indexPath) as? UserTableViewCell else {return UITableViewCell()}
-        let user = users[indexPath.row]
+        let user = filteredUsers[indexPath.row]
         if let profileImageUrl = user.profileImageUrl {
             print("userImage: ",user.profileImageUrl ?? "")
             cell.profileImage.loadImageUsingCacheWithUrlString(profileImageUrl)

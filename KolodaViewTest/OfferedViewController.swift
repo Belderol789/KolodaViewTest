@@ -33,13 +33,7 @@ class OfferedViewController: UIViewController {
             
         }
     }
-//    @IBOutlet weak var secondTableView: UITableView!{
-//        didSet{
-//            secondTableView.register(OfferedTableViewCell.cellNib, forCellReuseIdentifier: OfferedTableViewCell.cellIdentifier)
-//            secondTableView.delegate = self
-//            secondTableView.delegate = self
-//        }
-//    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchOfferedUser()
@@ -83,9 +77,7 @@ class OfferedViewController: UIViewController {
                 self.offerName = dictionary["name"] as? String
                 self.currentUserName = dictionary["myName"] as? String
                 self.offeredToID = dictionary["offeredTo"] as? String
-                
-              
-                    
+   
                     let newUser = User()
                     newUser.location = self.offerLocation
                     newUser.schedule = self.offerSchedule
@@ -101,16 +93,7 @@ class OfferedViewController: UIViewController {
                   
                     
                 } else if FIRAuth.auth()?.currentUser?.uid == self.offeredToID {
-                    
-//                    let newUser = User()
-//                    newUser.location = self.offerLocation
-//                    newUser.schedule = self.offerSchedule
-//                    newUser.price = self.offerPrice
-//                    newUser.firstSub = self.offerSubject
-//                    newUser.profileImageUrl = self.offeresImage
-//                    newUser.name = self.offerName
-//                    newUser.offeredBy = self.currentUserName
-//                    
+               
                     self.secondUsers.append(newUser)
                     
                 }
@@ -129,11 +112,8 @@ class OfferedViewController: UIViewController {
 
 }
 
-extension OfferedViewController : UITableViewDelegate {
-    
-}
 
-extension OfferedViewController : UITableViewDataSource {
+extension OfferedViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfUsers = 0
@@ -147,23 +127,37 @@ extension OfferedViewController : UITableViewDataSource {
         }
         
         return numberOfUsers
-
-//        if (tableNumber == 1) {
-//            numberOfUsers = users.count
-//            return numberOfUsers
-//            
-//        } else if (tableNumber == 2) {
-//            numberOfSecondUsers = secondUsers.count
-//            return numberOfSecondUsers
-//        } else {
-//            return 0
-//        }
-        
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch (offerSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            let selectedUser = users[indexPath.row]
+            
+            guard let userController = storyboard?.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {return}
+            
+            userController.selectedProfile = selectedUser
+            
+            present(userController, animated: true, completion: nil)
+            
+            break
+        case 1:
+            let selectedUser = secondUsers[indexPath.row]
+            
+            guard let userController = storyboard?.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {return}
+            userController.selectedProfile = selectedUser
+            present(userController, animated: true, completion: nil)
+            break
+        default:
+            break
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -200,35 +194,6 @@ extension OfferedViewController : UITableViewDataSource {
             break
         }
         
-
-//        if (tableNumber == 1) {
-//         
-//            let currentUser = users[indexPath.row]
-//            cell.nameLabel.text = currentUser.name
-//            cell.locationTextView.text = currentUser.location
-//            cell.priceLabel.text = currentUser.price! + "/hr"
-//            cell.subjectLabel.text = currentUser.firstSub
-//            cell.scheduleLabel.text = currentUser.schedule
-//            if let profileImageUrl = currentUser.profileImageUrl {
-//                print("userImage: ",currentUser.profileImageUrl ?? "")
-//                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
-//            }
-//
-//        } else if (tableNumber == 2) {
-//       
-//            let currentSecondUser = secondUsers[indexPath.row]
-//            cell.nameLabel.text = currentSecondUser.offeredBy
-//            cell.locationTextView.text = currentSecondUser.location
-//            cell.priceLabel.text = currentSecondUser.price! + "/hr"
-//            cell.subjectLabel.text = currentSecondUser.firstSub
-//            cell.scheduleLabel.text = currentSecondUser.schedule
-//            if let profileImageUrl = currentSecondUser.profileImageUrl {
-//                print("userImage: ",currentSecondUser.profileImageUrl ?? "")
-//                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
-//            }
-//
-//        }
-      
         return cell
     }
 

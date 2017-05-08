@@ -193,7 +193,7 @@ extension ChatViewController : UIImagePickerControllerDelegate, UINavigationCont
             return
         }
         
-        //display / store
+
         uploadImage(image)
         
     }

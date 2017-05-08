@@ -26,59 +26,50 @@ class UserViewController: UIViewController {
     var profileThirdSub : String? = ""
     var offerButtonCenter : CGPoint!
     var messageButtonCenter : CGPoint!
+    var reviewButtonCenter : CGPoint!
     var backButtonCenter : CGPoint!
     var currentUserEmail: String? = ""
     var currentUserID: String? = ""
     var currentUserName : String? = ""
     var currentUserImage : String? = ""
     var currentUser : FIRUser? = FIRAuth.auth()?.currentUser
-    //var profileScreenName: String = ""
-   // var profileImageURL: String = ""
-    
+
   
     
 
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
             imageView.circlerImage()
-            imageView.borderColors()
         }
     }
     @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var stackView: UIStackView! {
-        didSet {
-            stackView.layer.borderColor = UIColor.orange.cgColor
-            stackView.layer.borderWidth = 1.0
-        }
-    }
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var moreButton: UIButton!{
         didSet{
             moreButton.circlerImage()
-            moreButton.borderColors()
         }
     }
     @IBOutlet weak var saveButton: UIButton!{
         didSet {
             saveButton.circlerImage()
-            saveButton.borderColors()
         }
     }
     @IBOutlet weak var messageButton: UIButton!{
         didSet{
             messageButton.circlerImage()
-            messageButton.borderColors()
+      
         }
     }
     @IBOutlet weak var offerButton: UIButton!{
         didSet{
             offerButton.circlerImage()
-            offerButton.borderColors()
+     
         }
     }
     @IBOutlet weak var backButton: UIButton!{
         didSet{
             backButton.circlerImage()
-            backButton.borderColors()
+      
         }
     }
     
@@ -97,50 +88,30 @@ class UserViewController: UIViewController {
             priceLabel.curveEdges()
         }
     }
-    @IBOutlet weak var ageLabel: UILabel! {
-        didSet {
-            ageLabel.borderColor()
-        }
-    }
-    @IBOutlet weak var genderLabel: UILabel! {
-        didSet {
-            genderLabel.borderColor()
-        }
-    }
-    @IBOutlet weak var descTextView: UITextView! {
-        didSet {
-            descTextView.layer.borderWidth = 1.0
-            descTextView.layer.borderColor = UIColor.orange.cgColor
-        }
-    }
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var descTextView: UITextView!
     
-    @IBOutlet weak var firstLabel: UILabel!{
-        didSet{
-            firstLabel.borderColor()
-        }
-    }
-    @IBOutlet weak var secondLabel: UILabel!{
-        didSet{
-            secondLabel.borderColor()
-        }
-    }
-    @IBOutlet weak var thirdLabel: UILabel!{
-        didSet{
-            thirdLabel.borderColor()
-        }
-    }
+    @IBOutlet weak var firstLabel: UILabel!
+    @IBOutlet weak var secondLabel: UILabel!
+    @IBOutlet weak var thirdLabel: UILabel!
     
+    @IBOutlet weak var reviewButton: UIButton!{
+        didSet{
+            reviewButton.circlerImage()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.currentUserID = FIRAuth.auth()?.currentUser?.uid
         
-        
         listenToFireBase()
         messageButtonCenter = messageButton.center
         offerButtonCenter = offerButton.center
         backButtonCenter = backButton.center
+        reviewButtonCenter = reviewButton.center
         
         
         setupAnimation()
@@ -157,6 +128,7 @@ class UserViewController: UIViewController {
         offerButton.center = moreButton.center
         messageButton.center = moreButton.center
         backButton.center = moreButton.center
+        reviewButton.center = moreButton.center
     }
     
     func listenToFireBase() {
@@ -228,6 +200,7 @@ class UserViewController: UIViewController {
                 self.messageButton.center = self.messageButtonCenter
                 self.offerButton.center = self.offerButtonCenter
                 self.backButton.center = self.backButtonCenter
+                self.reviewButton.center = self.reviewButtonCenter
             })
         } else {
             moreButton.setBackgroundImage(#imageLiteral(resourceName: "moreButton"), for: .normal)
@@ -235,6 +208,7 @@ class UserViewController: UIViewController {
                 self.messageButton.center = self.moreButton.center
                 self.offerButton.center = self.moreButton.center
                 self.backButton.center = self.moreButton.center
+                self.reviewButton.center = self.moreButton.center
             })
         }
     }
@@ -246,15 +220,12 @@ class UserViewController: UIViewController {
         
     }
     
+    @IBAction func reviewButtonClicked(_ sender: Any) {
+        
+    }
+    
     @IBAction func chatClicked(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-       
-      
-        
-
-        
-        
         let chatID = currentUserID! + otherUserID
         
         let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail!, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: profileName!, userTwoImageURL: profileImage!)
@@ -271,7 +242,6 @@ class UserViewController: UIViewController {
                 
                 let post : [String : Any] = ["messages": ["0": ["body": "This is the beginning of the chat between \(self.selectedProfile!.email) and \(self.currentUserEmail)", "image" : "nil", "timestamp": timeCreated, "userID": self.currentUserID, "userEmail": self.currentUserEmail]]]
                 
-                //, "users": [self.currentUserID: self.currentUserEmail, selectedProfile!.uid: selectedProfile!.email]]
                   FIRDatabase.database().reference().child("chat").child(newChat.id).updateChildValues(post)
             }
             
@@ -287,9 +257,6 @@ class UserViewController: UIViewController {
         
     }
     
-    @IBAction func saveClicked(_ sender: UIButton) {
-        
-    }
     
     @IBAction func backButtonClicked(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

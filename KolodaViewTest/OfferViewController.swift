@@ -54,18 +54,14 @@ class OfferViewController: UIViewController {
         setupData()
         currentUser = FIRAuth.auth()?.currentUser
         listenToFirebase()
-    
 
-       
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
-    
-    
-    
+
     func setupUpdatedData() {
         
         if priceTextField.text == "" || locationTextView.text == "" || subjectTextField.text == "" || scheduleTextField.text == "" {
@@ -132,8 +128,6 @@ class OfferViewController: UIViewController {
     }
     
     func selectedUserFirebase() {
-        
-        //let offerID = (selectedUser?.uid)!
         
         let offer : [String : Any] = ["offeredBy": currentUserID ?? "No ID", "offeredTo" : selectedUser?.uid ?? "No ID", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice ?? "No Price", "location" : currentLocation ?? "No location", "subject" : currentSubject ?? "No subject", "schedule" : currentSchedule ?? "No Schedule", "name" : selectedUser?.name ?? "Anonymous", "myName" : myUserName ?? "No name"]
         

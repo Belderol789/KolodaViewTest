@@ -38,7 +38,6 @@ class LoginViewController: UIViewController {
     
     func checkIfUserExist() {
         if(FIRAuth.auth()?.currentUser) != nil {
-            print("A User is logged in")
             goToPage(page: "ViewController")
         }
     }
@@ -48,8 +47,10 @@ class LoginViewController: UIViewController {
             
             FIRAuth.auth()?.signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                 if error != nil {
-                    self.addAlertAndAction(title: "Error Signing in", message: (error?.localizedDescription)!, actionTitle: "Ok")
-                    
+                    let alert = UIAlertController(title: "Error signing in", message: (error?.localizedDescription)!, preferredStyle: UIAlertControllerStyle.alert)
+                    let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
+                    alert.addAction(alertAction)
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     
                     self.goToPage(page: "ViewController")
@@ -80,18 +81,9 @@ class LoginViewController: UIViewController {
         
         
     }
+ 
     
-    func addAlertAndAction(title: String, message: String, actionTitle: String)
-    {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        let alertAction = UIAlertAction(title: actionTitle, style: UIAlertActionStyle.destructive, handler: nil)
-        alert.addAction(alertAction)
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-    
-    func goToPage(page: String)
-    {
+    func goToPage(page: String) {
         
         let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
         let appDelegate = (UIApplication.shared.delegate as! AppDelegate)

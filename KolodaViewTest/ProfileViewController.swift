@@ -37,21 +37,9 @@ class ProfileViewController: UIViewController {
             imageView.circlerImage()
         }
     }
-    @IBOutlet weak var priceTextField: UITextField!{
-        didSet{
-            priceTextField.borderColor()
-        }
-    }
-    @IBOutlet weak var firstTextField: UITextField!{
-        didSet{
-            firstTextField.borderColor()
-        }
-    }
-    @IBOutlet weak var secondTextField: UITextField!{
-        didSet{
-            secondTextField.borderColor()
-        }
-    }
+    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var firstTextField: UITextField!
+    @IBOutlet weak var secondTextField: UITextField!
     
     @IBOutlet weak var roleView: UIView!
     @IBOutlet weak var tuteeButton: UIButton!{
@@ -69,43 +57,28 @@ class ProfileViewController: UIViewController {
             cancelButton.circlerImage()
         }
     }
-    @IBOutlet weak var thirdTextField: UITextField!{
-        didSet{
-            thirdTextField.borderColor()
-        }
-    }
+    @IBOutlet weak var thirdTextField: UITextField!
     @IBOutlet weak var locationTextView: UITextView!{
         didSet{
-            locationTextView.layer.borderColor = UIColor.orange.cgColor
-            locationTextView.layer.borderWidth = 1.0
             locationTextView.text = "Where would you like to meetup?"
         }
     }
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
-            descTextView.layer.borderWidth = 1.0
-            descTextView.layer.borderColor = UIColor.orange.cgColor
             descTextView.text = "Say something about yourself!"
         }
     }
     @IBOutlet weak var nameLabel: UILabel!
-    
-    @IBOutlet weak var backButton: UIButton!{
-        didSet{
-            backButton.circlerImage()
-            backButton.borderColors()
-        }
-    }
+
     @IBOutlet weak var saveButton: UIButton!{
         didSet{
             saveButton.circlerImage()
-            saveButton.borderColors()
+    
         }
     }
     @IBOutlet weak var changeRoleButton: UIButton!{
         didSet{
             changeRoleButton.circlerImage()
-            changeRoleButton.borderColors()
         }
     }
    
@@ -161,10 +134,11 @@ class ProfileViewController: UIViewController {
         appDelegate.window?.rootViewController = gameScene
         
     }
-    @IBAction func backButtonTapped(_ sender: Any) {
-         goToPage(page: "ViewController")
-    }
+
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+          goToPage(page: "ViewController")
+    }
     
     
     @IBAction func changeRoleTapped(_ sender: Any) {
@@ -250,8 +224,6 @@ class ProfileViewController: UIViewController {
             if let downloadPath = meta?.downloadURL()?.absoluteString {
                 //save to firebase database
                 self.saveImagePath(downloadPath)
-                
-                print("")
             }
             
         })

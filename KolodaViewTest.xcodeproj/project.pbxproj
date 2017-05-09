@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5202ECFB1EC1A8F00003A9F6 /* ReviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202ECFA1EC1A8F00003A9F6 /* ReviewListViewController.swift */; };
 		523DBB6A1EB8756000CD4335 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523DBB691EB8756000CD4335 /* AppDelegate.swift */; };
 		523DBB6C1EB8756000CD4335 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523DBB6B1EB8756000CD4335 /* ViewController.swift */; };
 		523DBB6F1EB8756000CD4335 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523DBB6D1EB8756000CD4335 /* Main.storyboard */; };
@@ -31,7 +32,6 @@
 		52F4FE381EBA1A4600503BD4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4FE371EBA1A4600503BD4 /* Message.swift */; };
 		52F4FE3A1EBA236D00503BD4 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4FE391EBA236D00503BD4 /* ImageViewController.swift */; };
 		52F5B4D61EC0280000DBDE1F /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F5B4D51EC0280000DBDE1F /* ReviewViewController.swift */; };
-		52F5B4D81EC067F400DBDE1F /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F5B4D71EC067F400DBDE1F /* CosmosDistrib.swift */; };
 		52F94BED1EB8B843003D2184 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F94BEC1EB8B843003D2184 /* LoginViewController.swift */; };
 		52F94BEF1EB8B8D4003D2184 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52F94BEE1EB8B8D4003D2184 /* GoogleService-Info.plist */; };
 		52F94BF11EB8BB6E003D2184 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F94BF01EB8BB6E003D2184 /* Extensions.swift */; };
@@ -43,6 +43,7 @@
 /* Begin PBXFileReference section */
 		3DCDB9C3EB72EA3967BD1F89 /* Pods-KolodaViewTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KolodaViewTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest.debug.xcconfig"; sourceTree = "<group>"; };
 		444DA77A1CD3E25FCEF5E07E /* Pods-KolodaViewTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KolodaViewTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-KolodaViewTest/Pods-KolodaViewTest.release.xcconfig"; sourceTree = "<group>"; };
+		5202ECFA1EC1A8F00003A9F6 /* ReviewListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewListViewController.swift; sourceTree = "<group>"; };
 		523DBB661EB8756000CD4335 /* KolodaViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KolodaViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		523DBB691EB8756000CD4335 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523DBB6B1EB8756000CD4335 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		52F4FE371EBA1A4600503BD4 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		52F4FE391EBA236D00503BD4 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		52F5B4D51EC0280000DBDE1F /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
-		52F5B4D71EC067F400DBDE1F /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		52F94BEC1EB8B843003D2184 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		52F94BEE1EB8B8D4003D2184 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52F94BF01EB8BB6E003D2184 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 				52F21D761EBADF69004B1040 /* OfferViewController.swift */,
 				52C2E83C1EBC346E001DF892 /* OfferedViewController.swift */,
 				52F5B4D51EC0280000DBDE1F /* ReviewViewController.swift */,
+				5202ECFA1EC1A8F00003A9F6 /* ReviewListViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -166,7 +167,6 @@
 		52F94BEB1EB8B82A003D2184 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				52F5B4D71EC067F400DBDE1F /* CosmosDistrib.swift */,
 				52F4FE351EBA1A1D00503BD4 /* Chat.swift */,
 				52F4FE371EBA1A4600503BD4 /* Message.swift */,
 				52F94BF41EB8DF64003D2184 /* User.swift */,
@@ -329,10 +329,10 @@
 				52F4FE361EBA1A1D00503BD4 /* Chat.swift in Sources */,
 				52F94BF31EB8BDDA003D2184 /* SignupViewController.swift in Sources */,
 				52F5B4D61EC0280000DBDE1F /* ReviewViewController.swift in Sources */,
-				52F5B4D81EC067F400DBDE1F /* CosmosDistrib.swift in Sources */,
 				52C638741EB983AC0090AED1 /* UserViewController.swift in Sources */,
 				52F94BF11EB8BB6E003D2184 /* Extensions.swift in Sources */,
 				52F94BED1EB8B843003D2184 /* LoginViewController.swift in Sources */,
+				5202ECFB1EC1A8F00003A9F6 /* ReviewListViewController.swift in Sources */,
 				52F21D771EBADF6A004B1040 /* OfferViewController.swift in Sources */,
 				52F4FE321EBA166000503BD4 /* ChatImageTableViewCell.swift in Sources */,
 				52C2E8401EBC4081001DF892 /* OfferedTableViewCell.swift in Sources */,

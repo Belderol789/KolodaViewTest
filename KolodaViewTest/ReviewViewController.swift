@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Cosmos
+
 
 class ReviewViewController: UIViewController {
     
@@ -15,6 +17,7 @@ class ReviewViewController: UIViewController {
     var review : String? = ""
     var selectedID : String? = ""
 
+    @IBOutlet weak var cosmosRating: CosmosView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
@@ -33,6 +36,7 @@ class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupData()
+      
 
        
     }
@@ -46,14 +50,13 @@ class ReviewViewController: UIViewController {
     @IBAction func submitButtonTapped(_ sender: Any) {
         
         review = reviewTextView.text
+        let cosmoRating = String(cosmosRating.rating)
         
-
-        let userReview : [String : Any] = ["review" : review ?? "No review"]
-     
+        let userReview : [String : Any] = ["review" : review ?? "No review", "rating" : cosmoRating]
         
         FIRDatabase.database().reference().child("users").child(selectedID!).updateChildValues(userReview)
         
-        let alert = UIAlertController(title: "Review Submitted", message: "Your review for \(selectedProfile?.name) has been successfully submitted", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Review Submitted", message: "Your review for \((selectedProfile?.name)!) has been successfully submitted", preferredStyle: UIAlertControllerStyle.alert)
         let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
         alert.addAction(alertAction)
         self.present(alert, animated: true, completion: nil)

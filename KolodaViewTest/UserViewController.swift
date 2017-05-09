@@ -224,10 +224,7 @@ class UserViewController: UIViewController {
         
     }
     
-    @IBAction func reviewButtonClicked(_ sender: Any) {
-      
-        
-    }
+ 
     
     @IBAction func chatClicked(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)

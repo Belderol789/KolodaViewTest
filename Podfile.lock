@@ -1,4 +1,5 @@
 PODS:
+  - Cosmos (9.0.0)
   - Firebase/Auth (3.16.0):
     - Firebase/Core
     - FirebaseAuth (= 3.1.1)
@@ -41,12 +42,14 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
 
 DEPENDENCIES:
+  - Cosmos
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
 
 SPEC CHECKSUMS:
+  Cosmos: 33eee62b2a0418452aef470f711f83c3ea061b7b
   Firebase: 21bf4a89d3f01bfbe11adc3a5d934a4a3d3a5fd6
   FirebaseAnalytics: 920e46455f27b0a52a80907a6d9b73ee4bd1c635
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
@@ -57,6 +60,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
 
-PODFILE CHECKSUM: 0a3178d3089542d212d0c9fbb37ca4451a50348e
+PODFILE CHECKSUM: aad0954d492d9804676420051702aa7b65fdd303
 
 COCOAPODS: 1.2.1

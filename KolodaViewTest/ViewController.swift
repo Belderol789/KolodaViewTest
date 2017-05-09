@@ -31,6 +31,8 @@ class ViewController: UIViewController, UISearchBarDelegate {
     var currentUserId : String? = ""
     var currentUserStatus : String? = ""
     var userRole : String! = ""
+    var myRole : String! = ""
+    
     
     @IBOutlet weak var userTableView: UITableView! {
         didSet{
@@ -66,10 +68,6 @@ class ViewController: UIViewController, UISearchBarDelegate {
         didSet {
             logoutButton.circlerImage()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        userTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -207,17 +205,48 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 self.userRole = dictionary["role"] as? String
                 user.uid = snapshot.key
                 
-                if user.uid != FIRAuth.auth()?.currentUser?.uid {
-                    if self.userRole == "tutor" {
-                        self.tutorUsers.append(user)
-                        self.users = self.tutorUsers
+                let myID = FIRAuth.auth()?.currentUser?.uid
+                
+                FIRDatabase.database().reference().child("users").child(myID!).observe(.value, with: { (snapshot) in
+                    if let dictionary = snapshot.value as? [String : Any] {
+                        self.myRole = dictionary["role"] as? String
                         
-                    } else {
-                        self.tuteeUsers.append(user)
-                        self.users = self.tuteeUsers
+                        if self.myRole == "tutee" {
+                            if user.uid != myID {
+                                if self.userRole == "tutor" {
+                                    self.tutorUsers.append(user)
+                                    self.users = self.tutorUsers
+                                }
+                            }
+                        } else {
+                            if user.uid != myID {
+                                if self.userRole == "tutee"{
+                                    self.tuteeUsers.append(user)
+                                    self.users = self.tuteeUsers
+                                }
+                            }
+                        }
+                        
+                        DispatchQueue.main.async(execute: {
+                            self.filteredUsers = self.users
+                            self.userTableView.reloadData()
+                            
+                        })
+                
                     }
-
-                }
+                })
+//                if user.uid != myID {
+//                    if self.userRole == "tutor" {
+//                        self.tuteeUsers.removeAll()
+//                        self.tutorUsers.append(user)
+//                        self.users = self.tutorUsers
+//                    } else {
+//                        self.tutorUsers.removeAll()
+//                        self.tuteeUsers.append(user)
+//                        self.users = self.tuteeUsers
+//                    }
+//
+//                }
                 DispatchQueue.main.async(execute: {
                     self.filteredUsers = self.users
                     self.userTableView.reloadData()

@@ -1092,8 +1092,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" backgroundImage="reviewIcon"/>
                                         <connections>
-                                            <action selector="offerClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="jWp-od-RYi"/>
-                                            <action selector="reviewButtonClicked:" destination="bs3-b7-ALn" eventType="touchUpInside" id="XIr-1A-yty"/>
+                                            <segue destination="bDY-ix-ppC" kind="show" id="XHw-61-E3b"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4S2-oV-gbg">
@@ -1149,6 +1148,24 @@
             </objects>
             <point key="canvasLocation" x="1856.8" y="67.916041979010501"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ElX-md-0tZ">
+            <objects>
+                <viewController id="bDY-ix-ppC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gUt-Hf-34f"/>
+                        <viewControllerLayoutGuide type="bottom" id="oy0-mA-xeR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EPM-4B-YAX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J78-t2-Cec" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3580" y="-584"/>
+        </scene>
         <!--Review View Controller-->
         <scene sceneID="iis-Eg-z7d">
             <objects>
@@ -1168,7 +1185,21 @@
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7cZ-kh-5mG" customClass="CosmosView" customModule="Cosmos">
                                         <rect key="frame" x="8" y="116" width="359" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                                <color key="value" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIO-1Z-MWJ">
                                         <rect key="frame" x="8" y="8" width="100" height="100"/>
@@ -1230,6 +1261,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Item" id="8o1-8W-AuT"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cosmosRating" destination="7cZ-kh-5mG" id="4RN-dF-kAg"/>
                         <outlet property="imageView" destination="IIO-1Z-MWJ" id="j4I-1h-UQ1"/>
                         <outlet property="nameLabel" destination="oNp-ce-rHK" id="wLh-d5-Tzi"/>
                         <outlet property="priceLabel" destination="NIN-Gf-U14" id="Ahw-cx-hvt"/>
@@ -1326,7 +1358,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cKI-lN-Vcz" id="a9e-3M-N5I">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1334,7 +1366,7 @@
                                         <rect key="frame" x="0.0" y="115" width="375" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5uX-8B-J06" id="Grf-zb-Rnf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="127"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1526,7 +1558,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1z6-Fl-0XA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2640.8000000000002" y="67.916041979010501"/>
+            <point key="canvasLocation" x="4471" y="68"/>
         </scene>
     </scenes>
     <resources>

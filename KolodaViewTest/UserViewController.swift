@@ -13,12 +13,6 @@ class UserViewController: UIViewController {
     
     var selectedProfile : User!
     var otherUserID : String = ""
-    var profileName : String? = ""
-    var profileLocation : String? = ""
-    var profilePrice : String! = ""
-    var profileAge : String? = ""
-    var profileGender : String? = ""
-    var profileDesc : String? = ""
     var profileImage : String? = ""
     var profileEmail : String? = ""
     var profileFirstSub : String? = ""
@@ -42,33 +36,37 @@ class UserViewController: UIViewController {
             imageView.circlerImage()
         }
     }
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var profileView: UIView!{
+        didSet{
+            profileView.layer.borderColor = UIColor.orange.cgColor
+            profileView.layer.borderWidth = 1
+        }
+    }
     @IBOutlet weak var moreButton: UIButton!{
         didSet{
             moreButton.circlerImage()
+            moreButton.borderColors()
         }
     }
-    @IBOutlet weak var saveButton: UIButton!{
-        didSet {
-            saveButton.circlerImage()
-        }
-    }
+  
     @IBOutlet weak var messageButton: UIButton!{
         didSet{
             messageButton.circlerImage()
+            messageButton.borderColors()
       
         }
     }
     @IBOutlet weak var offerButton: UIButton!{
         didSet{
             offerButton.circlerImage()
+            offerButton.borderColors()
      
         }
     }
     @IBOutlet weak var backButton: UIButton!{
         didSet{
             backButton.circlerImage()
+            backButton.borderColors()
       
         }
     }
@@ -92,14 +90,15 @@ class UserViewController: UIViewController {
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
+            
             descTextView.isUserInteractionEnabled = false
         }
     }
     
     @IBOutlet weak var firstLabel: UILabel!
     @IBOutlet weak var secondLabel: UILabel!
-    @IBOutlet weak var thirdLabel: UILabel!
     
+    @IBOutlet weak var thirdLabel: UILabel!
     @IBOutlet weak var reviewButton: UIButton!{
         didSet{
             reviewButton.circlerImage()
@@ -139,17 +138,17 @@ class UserViewController: UIViewController {
         FIRDatabase.database().reference().child("users").child(otherUserID).observe(.value, with: { (snapshot) in
             let dictionary = snapshot.value as? [String : Any]
             
-            self.profileName = dictionary?["name"] as? String
-            self.profileAge = dictionary?["age"] as? String
-            self.profileDesc = dictionary?["desc"] as? String
+            self.nameLabel.text = dictionary?["name"] as? String
+            self.ageLabel.text = dictionary?["age"] as? String
+            self.descTextView.text = dictionary?["desc"] as? String
             self.profileImage = dictionary?["profileImageUrl"] as? String
-            self.profileGender = dictionary?["gender"] as? String
-            self.profilePrice = dictionary?["price"] as? String
-            self.profileLocation = dictionary?["location"] as? String
+            self.genderLabel.text = dictionary?["gender"] as? String
+            self.priceLabel.text = dictionary?["price"] as? String
+            self.locationLabel.text = dictionary?["location"] as? String
             self.profileEmail = dictionary?["email"] as? String
-            self.profileFirstSub = dictionary?["subject"] as? String
-            self.profileSecondSub = dictionary?["secondSubject"] as? String
-            self.profileThirdSub = dictionary?["thirdSubject"] as? String
+            self.firstLabel.text = dictionary?["subject"] as? String
+            self.secondLabel.text = dictionary?["secondSubject"] as? String
+            self.thirdLabel.text = dictionary?["thirdSubject"] as? String
             
             
             
@@ -175,19 +174,7 @@ class UserViewController: UIViewController {
     }
     
     func setUpProfile() {
-        
-        
-        nameLabel.text = profileName
-        descTextView.text = profileDesc
-        ageLabel.text = profileAge
-        locationLabel.text = profileLocation
-        genderLabel.text = profileGender
-        priceLabel.text = "\(profilePrice!) /hr"
-        firstLabel.text = profileFirstSub
-        secondLabel.text = profileSecondSub
-        thirdLabel.text = profileThirdSub
-        
-        
+  
         if let profileURL = profileImage {
             imageView.loadImageUsingCacheWithUrlString(profileURL)
             imageView.circlerImage()
@@ -224,13 +211,24 @@ class UserViewController: UIViewController {
         
     }
     
+    @IBAction func reviewsClicked(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let reviewsVC = storyboard.instantiateViewController(withIdentifier: "ReviewListViewController") as! ReviewListViewController
+        reviewsVC.currentUserID = self.otherUserID
+        reviewsVC.reviewedUser = self.selectedProfile
+        present(reviewsVC, animated: true, completion: nil)
+        
+        
+        
+    }
  
     
     @IBAction func chatClicked(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let chatID = currentUserID! + otherUserID
         
-        let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: profileName!, userTwoImageURL: profileImage!)
+        let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: self.nameLabel.text!, userTwoImageURL: profileImage!)
         
         let newChatID = newChat.id
         

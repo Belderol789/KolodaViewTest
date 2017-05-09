@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Koloda
 
 
 class ViewController: UIViewController, UISearchBarDelegate {
@@ -20,6 +21,11 @@ class ViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var scheduleLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var kolodaView: KolodaView!{
+        didSet{
+            kolodaView.isUserInteractionEnabled = true
+        }
+    }
 
     var tutorUsers = [User]()
     var tuteeUsers = [User]()
@@ -32,6 +38,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     var currentUserStatus : String? = ""
     var userRole : String! = ""
     var myRole : String! = ""
+    var images = [UIImage]()
     
     
     @IBOutlet weak var userTableView: UITableView! {
@@ -72,6 +79,14 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for _ in 0...3 {
+            self.images.append(#imageLiteral(resourceName: "menuButton"))
+        }
+        kolodaView.removeFromSuperview()
+        
+        kolodaView.dataSource = self
+        kolodaView.delegate = self
 
         currentUserId = FIRAuth.auth()?.currentUser?.uid
         fetchUser()
@@ -235,18 +250,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 
                     }
                 })
-//                if user.uid != myID {
-//                    if self.userRole == "tutor" {
-//                        self.tuteeUsers.removeAll()
-//                        self.tutorUsers.append(user)
-//                        self.users = self.tutorUsers
-//                    } else {
-//                        self.tutorUsers.removeAll()
-//                        self.tuteeUsers.append(user)
-//                        self.users = self.tuteeUsers
-//                    }
-//
-//                }
+
                 DispatchQueue.main.async(execute: {
                     self.filteredUsers = self.users
                     self.userTableView.reloadData()
@@ -260,6 +264,30 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
 }
 
+extension ViewController :  KolodaViewDelegate, KolodaViewDataSource {
+    
+    func kolodaDidRunOutOfCards(koloda: KolodaView) {
+//        dataSource.reset()
+    }
+    
+    
+    func koloda(koloda: KolodaView, didSelectCardAt index: Int) {
+        UIApplication.shared.openURL(NSURL(string: "https://yalantis.com/")! as URL)
+    }
+    
+    func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
+        return images.count
+    }
+    
+    func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
+        return UIImageView(image: images[index])
+    }
+    
+    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+        return Bundle.main.loadNibNamed("OverlayView",
+                                                  owner: self, options: nil)?[0] as? OverlayView
+    }
+}
 
 extension ViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

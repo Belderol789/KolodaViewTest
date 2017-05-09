@@ -26,6 +26,7 @@ class User {
     var offeredTo : String?
     var offeredBy : String?
     var schedule : String?
+    var review : String?
 
     
     init() {
@@ -46,6 +47,7 @@ class User {
         offeredTo = ""
         offeredBy = ""
         schedule = ""
+        review = ""
     }
     
     init(dictionary: [String: Any]) {
@@ -66,6 +68,7 @@ class User {
         self.offeredBy = dictionary["offeredBy"] as? String
         self.offeredTo = dictionary["offeredTo"] as? String
         self.schedule = dictionary["schedule"] as? String
+        self.review = dictionary["review"] as? String
         
         //self.numberOfPosts = dictionary["numberOfPosts"] as? String
     }

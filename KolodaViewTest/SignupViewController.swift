@@ -87,7 +87,7 @@ class SignupViewController: UIViewController {
                         return
                     }
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        let values = ["name": self.nameTextField.text!, "email": self.emailTextField.text!, "profileImageUrl": profileImageUrl, "uid" : (user?.uid)!, "age" : self.ageTextField.text!, "gender" : self.genderTextField.text!, "location" : self.locationTextField.text!, "price" : "50", "subject": self.firstSubTextField.text!, "desc" : self.textView.text, "secondSubject" : self.secondSubTextField.text ?? "None", "thirdSubject" : self.thirdSubTextField.text ?? "None", "rating" : "0", "role" : self.role ?? "none", "review" : "nil"] as [String : Any]
+                        let values = ["name": self.nameTextField.text!, "email": self.emailTextField.text!, "profileImageUrl": profileImageUrl, "uid" : (user?.uid)!, "age" : self.ageTextField.text!, "gender" : self.genderTextField.text!, "location" : self.locationTextField.text!, "price" : "50", "subject": self.firstSubTextField.text!, "desc" : self.textView.text, "secondSubject" : self.secondSubTextField.text ?? "None", "thirdSubject" : self.thirdSubTextField.text ?? "None", "rating" : "0", "role" : self.role ?? "none", "review" : "No review"] as [String : Any]
                         self.registerUserIntoDatabaseWithUID((user?.uid)!, values: values as [String : AnyObject])
                         self.id = (user?.uid)!
                         self.chooseRoleView()

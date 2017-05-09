@@ -62,25 +62,7 @@ class OfferViewController: UIViewController {
         
     }
 
-    func setupUpdatedData() {
-        
-        if priceTextField.text == "" || locationTextView.text == "" || subjectTextField.text == "" || scheduleTextField.text == "" {
-            addAlertAndAction(title: "Missing Fields", message: "kindly fill in the required values", actionTitle: "Ok")
-            return
-        } else {
-            
-            self.currentPrice = priceTextField.text
-            self.currentLocation = locationTextView.text
-            self.currentSubject = subjectTextField.text
-            self.currentSchedule = scheduleTextField.text
-            
-        }
-        
-        selectedUserFirebase()
-        
-        
-    }
-    @IBAction func locationPlaceHolder(_ sender: Any) {
+       @IBAction func locationPlaceHolder(_ sender: Any) {
         if locationTextView.text == "Where would you like to meetup?" {
             locationTextView.text = ""
             locationTextView.textColor = .black
@@ -116,6 +98,25 @@ class OfferViewController: UIViewController {
  
     }
     
+    func setupUpdatedData() {
+        
+        if priceTextField.text == "" || locationTextView.text == "" || subjectTextField.text == "" || scheduleTextField.text == "" {
+            addAlertAndAction(title: "Missing Fields", message: "kindly fill in the required values", actionTitle: "Ok")
+            return
+        } else {
+            
+            self.currentPrice = priceTextField.text
+            self.currentLocation = locationTextView.text
+            self.currentSubject = subjectTextField.text
+            self.currentSchedule = scheduleTextField.text
+            
+        }
+        
+        selectedUserFirebase()
+        
+        
+    }
+    
     func setupData() {
         priceTextField.text = selectedUser?.price
         locationTextView.text = selectedUser?.location
@@ -124,12 +125,13 @@ class OfferViewController: UIViewController {
             imageView.loadImageUsingCacheWithUrlString(profileURL)
             imageView.circlerImage()
         }
+        
 
     }
     
     func selectedUserFirebase() {
         
-        let offer : [String : Any] = ["offeredBy": currentUserID ?? "No ID", "offeredTo" : selectedUser?.uid ?? "No ID", "offeresImage": currentUserImageUrl ?? "defaultImage", "price": currentPrice ?? "No Price", "location" : currentLocation ?? "No location", "subject" : currentSubject ?? "No subject", "schedule" : currentSchedule ?? "No Schedule", "name" : selectedUser?.name ?? "Anonymous", "myName" : myUserName ?? "No name"]
+        let offer : [String : Any] = ["offeredBy": currentUserID!, "offeredTo" : (selectedUser?.uid)!, "offeresImage": currentUserImageUrl!, "price": currentPrice!, "location" : currentLocation!, "subject" : currentSubject!, "schedule" : currentSchedule!, "name" : (selectedUser?.name)!, "myName" : myUserName!]
         
         FIRDatabase.database().reference().child("offers").childByAutoId().updateChildValues(offer)
         

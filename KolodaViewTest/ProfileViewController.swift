@@ -40,8 +40,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var firstTextField: UITextField!
     @IBOutlet weak var secondTextField: UITextField!
-    
-    @IBOutlet weak var roleView: UIView!
+    @IBOutlet weak var roleLabel: UILabel!
     @IBOutlet weak var tuteeButton: UIButton!{
         didSet{
             tuteeButton.circlerImage()
@@ -103,6 +102,10 @@ class ProfileViewController: UIViewController {
     func setupUI() {
         self.changeRoleButton.center = self.editButton.center
         self.saveButton.center = self.editButton.center
+        
+        self.tuteeButton.alpha = 0
+        self.tutorButton.alpha = 0
+        
         priceTextField.isUserInteractionEnabled = false
         firstTextField.isUserInteractionEnabled = false
         secondTextField.isUserInteractionEnabled = false
@@ -114,13 +117,6 @@ class ProfileViewController: UIViewController {
     
     func setupProfile() {
         
-        nameLabel.text = profileName
-        priceTextField.text = profilePrice
-        firstTextField.text = profileFirst
-        secondTextField.text = profileSecond
-        thirdTextField.text = profileThird
-        locationTextView.text = profileLocation
-        descTextView.text = profileDesc
         if let profileURL = profileImage {
             imageView.loadImageUsingCacheWithUrlString(profileURL)
             imageView.circlerImage()
@@ -143,35 +139,28 @@ class ProfileViewController: UIViewController {
     
     @IBAction func changeRoleTapped(_ sender: Any) {
         UIView.animate(withDuration: 0.3, animations: {
-            self.roleView.alpha = 0.95
+            self.tutorButton.alpha = 1
+            self.tuteeButton.alpha = 1
+
         })
     }
-    @IBAction func cancelButtonTapped(_ sender: Any) {
-       dismissView()
+  
 
-    }
     @IBAction func tutorButtonTapped(_ sender: Any) {
         tuteeButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutor"])
-        dismissView()
-
+       
+     
+     
     }
     @IBAction func tuteeButtonTapped(_ sender: Any) {
+
         tutorButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutee"])
-        dismissView()
+        
+      
     }
-    
-    func dismissView() {
-        if let viewWithTag = self.view.viewWithTag(99) {
-            print("Tag 99")
-            viewWithTag.removeFromSuperview()
-        }
-        else {
-            print("tag not found")
-        }
-    }
-    
+
     @IBAction func locationPlaceHolder(_ sender: Any) {
         if locationTextView.text == "Where would you like to meetup?" {
             locationTextView.text = ""
@@ -258,15 +247,16 @@ class ProfileViewController: UIViewController {
             
             let dictionary = snapshot.value as? [String : Any]
             
-            self.profileName = dictionary?["name"] as? String
-            self.profileLocation = dictionary?["location"] as? String
-            self.profileDesc = dictionary?["desc"] as? String
-            self.profilePrice = dictionary?["price"] as? String
-            self.profileFirst = dictionary?["subject"] as? String
-            self.profileSecond = dictionary?["secondSubject"] as? String
-            self.profileThird = dictionary?["thirdSubject"] as? String
+            self.nameLabel.text = dictionary?["name"] as? String
+            self.locationTextView.text = dictionary?["location"] as? String
+            self.descTextView.text = dictionary?["desc"] as? String
+            self.priceTextField.text = dictionary?["price"] as? String
+            self.firstTextField.text = dictionary?["subject"] as? String
+            self.secondTextField.text = dictionary?["secondSubject"] as? String
+            self.thirdTextField.text = dictionary?["thirdSubject"] as? String
             self.profileImage = dictionary?["profileImageUrl"] as? String
             self.profileRating = dictionary?["rating"] as? String
+            self.roleLabel.text = dictionary?["role"] as? String
             
             self.setupProfile()
         })

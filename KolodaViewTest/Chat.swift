@@ -16,14 +16,14 @@ class Chat {
     var userImages : Array<String>
     var messages : Array<Message>
     
-    init( ) {
-        id = ""
-        userIds = [String]()
-        userEmails = [String]()
-        userScreenNames = [String]()
-        userImages = [String]()
-        messages = [Message]()
-    }
+//    init( ) {
+//        id = ""
+//        userIds = [String]()
+//        userEmails = [String]()
+//        userScreenNames = [String]()
+//        userImages = [String]()
+//        messages = [Message]()
+//    }
     
     init(anId : String, userOneId: String, userOneEmail: String, userOneScreenName: String, userOneImageURL: String, userTwoId: String, userTwoEmail: String, userTwoScreenName: String, userTwoImageURL: String) {
         id = anId

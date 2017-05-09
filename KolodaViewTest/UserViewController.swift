@@ -11,7 +11,7 @@ import Firebase
 
 class UserViewController: UIViewController {
     
-    var selectedProfile : User?
+    var selectedProfile : User!
     var otherUserID : String = ""
     var profileName : String? = ""
     var profileLocation : String? = ""
@@ -28,7 +28,7 @@ class UserViewController: UIViewController {
     var messageButtonCenter : CGPoint!
     var reviewButtonCenter : CGPoint!
     var backButtonCenter : CGPoint!
-    var currentUserEmail: String? = ""
+    var currentUserEmail: String! = ""
     var currentUserID: String? = ""
     var currentUserName : String? = ""
     var currentUserImage : String? = ""
@@ -90,7 +90,11 @@ class UserViewController: UIViewController {
     }
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var descTextView: UITextView!
+    @IBOutlet weak var descTextView: UITextView!{
+        didSet{
+            descTextView.isUserInteractionEnabled = false
+        }
+    }
     
     @IBOutlet weak var firstLabel: UILabel!
     @IBOutlet weak var secondLabel: UILabel!
@@ -221,6 +225,7 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func reviewButtonClicked(_ sender: Any) {
+      
         
     }
     
@@ -228,7 +233,7 @@ class UserViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let chatID = currentUserID! + otherUserID
         
-        let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail!, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: profileName!, userTwoImageURL: profileImage!)
+        let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: profileName!, userTwoImageURL: profileImage!)
         
         let newChatID = newChat.id
         
@@ -240,13 +245,11 @@ class UserViewController: UIViewController {
                 dateFormatter.dateFormat = "MM-dd HH:mm"
                 let timeCreated = dateFormatter.string(from: currentDate as Date)
                 
-                let post : [String : Any] = ["messages": ["0": ["body": "This is the beginning of the chat between \(self.selectedProfile!.email) and \(self.currentUserEmail)", "image" : "nil", "timestamp": timeCreated, "userID": self.currentUserID, "userEmail": self.currentUserEmail]]]
+                let post : [String : Any] = ["messages": ["0": ["body": "This is the beginning of the chat between \((self.selectedProfile!.email)!) and \((self.currentUserEmail)!)", "image" : "nil", "timestamp": timeCreated, "userID": self.currentUserID, "userEmail": self.currentUserEmail]]]
                 
                   FIRDatabase.database().reference().child("chat").child(newChat.id).updateChildValues(post)
             }
-            
-           
-           
+  
         })
         
         guard let controller = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as?

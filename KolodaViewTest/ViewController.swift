@@ -27,7 +27,6 @@ class ViewController: UIViewController, UISearchBarDelegate {
     var filteredUsers = [User]()
     var profileButtonCenter : CGPoint!
     var offeredButtonCenter : CGPoint!
-    var savedButtonCenter : CGPoint!
     var logoutButtonCenter : CGPoint!
     var currentUserId : String? = ""
     var currentUserStatus : String? = ""
@@ -68,6 +67,11 @@ class ViewController: UIViewController, UISearchBarDelegate {
             logoutButton.circlerImage()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        userTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,8 +80,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
         setupSearchBar()
         setupButtonCenters()
         setupAnimation()
- 
-        
+
     }
 
        override func didReceiveMemoryWarning() {
@@ -118,14 +121,12 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     func setupButtonCenters() {
         profileButtonCenter = profileButton.center
-        savedButtonCenter = savedButton.center
         offeredButtonCenter = offeredButton.center
         logoutButtonCenter = logoutButton.center
     }
     
     func setupAnimation() {
         profileButton.center = menuButton.center
-        savedButton.center = menuButton.center
         offeredButton.center = menuButton.center
         logoutButton.center = menuButton.center
 
@@ -138,17 +139,14 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 
                 self.profileButton.alpha = 1
                 self.offeredButton.alpha = 1
-                self.savedButton.alpha = 1
                 self.logoutButton.alpha = 1
                 
                 self.profileButton.isUserInteractionEnabled = true
                 self.offeredButton.isUserInteractionEnabled = true
-                self.savedButton.isUserInteractionEnabled = true
                 self.logoutButton.isUserInteractionEnabled = true
                 
                 self.profileButton.center = self.profileButtonCenter
                 self.offeredButton.center = self.offeredButtonCenter
-                self.savedButton.center = self.savedButtonCenter
                 self.logoutButton.center = self.logoutButtonCenter
             })
         } else {
@@ -157,16 +155,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 
                 self.profileButton.alpha = 0
                 self.offeredButton.alpha = 0
-                self.savedButton.alpha = 0
                 self.logoutButton.alpha = 0
                 
                 self.profileButton.isUserInteractionEnabled = false
                 self.offeredButton.isUserInteractionEnabled = false
-                self.savedButton.isUserInteractionEnabled = false
                 self.logoutButton.isUserInteractionEnabled = false
 
                 self.profileButton.center = self.menuButton.center
-                self.savedButton.center = self.menuButton.center
                 self.offeredButton.center = self.menuButton.center
                 self.logoutButton.center = self.menuButton.center
             })

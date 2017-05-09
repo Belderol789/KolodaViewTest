@@ -15,13 +15,7 @@ class SignupViewController: UIViewController {
     var role : String? = "tutee"
     var id : String = ""
     
-    @IBOutlet weak var imageView: UIImageView! {
-        didSet {
-            imageView.circlerImage()
-            imageView.borderColors()
-            
-        }
-    }
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var firstSubTextField: UITextField!
     @IBOutlet weak var secondSubTextField: UITextField!
     @IBOutlet weak var thirdSubTextField: UITextField!
@@ -31,29 +25,13 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var genderTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var textView: UITextView!{
-        didSet{
-            textView.layer.borderColor = UIColor.black.cgColor
-            textView.text = "Say something about yourself!"
-            textView.textColor = .lightGray
-            textView.isUserInteractionEnabled = true
-            
-        }
-    }
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var tutorButton: UIButton!{
-        didSet{
-            tutorButton.circlerImage()
-        }
-    }
-    @IBOutlet weak var tuteeButton: UIButton!{
-        didSet{
-            tuteeButton.circlerImage()
-        }
-    }
+    @IBOutlet weak var tutorButton: UIButton!
+    @IBOutlet weak var tuteeButton: UIButton!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var credentialView: UIView!
     
@@ -69,14 +47,7 @@ class SignupViewController: UIViewController {
         
     }
 
-    @IBAction func removeTextViewText(_ sender: Any) {
-        if textView.text == "Say something about yourself!" {
-            textView.text = ""
-            textView.textColor = .black
-        }
-        
-        
-    }
+ 
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
          goToPage(page: "LoginViewController")
@@ -85,36 +56,29 @@ class SignupViewController: UIViewController {
   
     
     @IBAction func signupButtonTapped(_ sender: Any) {
-        guard let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text, let gender = genderTextField.text, let age = ageTextField.text, let name = nameTextField.text, let location = locationTextField.text, let subject = firstSubTextField.text, let secondSubject = secondSubTextField.text, let thirdSubject = thirdSubTextField.text else {return}
-        
-        if email == "" || password  == "" || gender  == "" || age  == "" || name  == "" || location == "" || subject == "" {
+      
+        if emailTextField.text == "" || passwordTextField.text  == "" || genderTextField.text == "" || ageTextField.text  == "" || nameTextField.text  == "" || locationTextField.text == "" || firstSubTextField.text == "" {
             
             addAlertAndAction(title: "Required Field Missing", message: "Kindly fill-in the required fields", actionTitle: "Ok")
             
-            if confirmPassword != password {
+            if confirmPasswordTextField.text != passwordTextField.text {
                 addAlertAndAction(title: "Password Mismatched", message: "Kindly retype your password", actionTitle: "Ok")
                 
             }
 
             return
-         
-            
+
         }
-        
+
       
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+        FIRAuth.auth()?.createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user: FIRUser?, error) in
             
             if error != nil {
                 self.addAlertAndAction(title: "Error", message: (error?.localizedDescription)!, actionTitle: "Ok")
                 return
             }
             
-        
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            let imageName = email
+            let imageName = self.emailTextField.text
             let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).jpg")
             if let profileImage = self.imageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
@@ -123,9 +87,9 @@ class SignupViewController: UIViewController {
                         return
                     }
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl, "uid" : uid, "age" : age, "gender" : gender, "location" : location, "price" : "50", "subject": subject, "desc" : self.textView.text, "secondSubject" : secondSubject, "thirdSubject" : thirdSubject, "rating" : "0", "role" : self.role ?? "none", "review" : "nil"] as [String : Any]
-                        self.registerUserIntoDatabaseWithUID(uid, values: values as [String : AnyObject])
-                        self.id = uid
+                        let values = ["name": self.nameTextField.text!, "email": self.emailTextField.text!, "profileImageUrl": profileImageUrl, "uid" : (user?.uid)!, "age" : self.ageTextField.text!, "gender" : self.genderTextField.text!, "location" : self.locationTextField.text!, "price" : "50", "subject": self.firstSubTextField.text!, "desc" : self.textView.text, "secondSubject" : self.secondSubTextField.text ?? "None", "thirdSubject" : self.thirdSubTextField.text ?? "None", "rating" : "0", "role" : self.role ?? "none", "review" : "nil"] as [String : Any]
+                        self.registerUserIntoDatabaseWithUID((user?.uid)!, values: values as [String : AnyObject])
+                        self.id = (user?.uid)!
                         self.chooseRoleView()
                     }
                 })
@@ -155,6 +119,24 @@ class SignupViewController: UIViewController {
    
         cancelButton.layer.cornerRadius = 20
         cancelButton.layer.masksToBounds = true
+        
+        
+        imageView.circlerImage()
+        imageView.layer.borderColor = UIColor.orange.cgColor
+        imageView.layer.borderWidth = 1.0
+        
+        
+        tuteeButton.circlerImage()
+        tutorButton.circlerImage()
+        
+        textView.text = "Say something about yourself."
+    
+        
+        
+        
+    }
+    @IBAction func removeText(_ sender: Any) {
+        textView.text = ""
     }
 
     func handleImage() {

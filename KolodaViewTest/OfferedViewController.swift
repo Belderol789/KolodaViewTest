@@ -20,6 +20,7 @@ class OfferedViewController: UIViewController {
     var offerSubject : String? = ""
     var offerName : String? = ""
     var currentUserName : String? = ""
+    var offeredID : String? = ""
     var users : [User] = []
     var secondUsers : [User] = []
 
@@ -86,6 +87,7 @@ class OfferedViewController: UIViewController {
                     newUser.profileImageUrl = self.offeresImage
                     newUser.name = self.offerName
                     newUser.offeredBy = self.currentUserName
+                    newUser.uid = self.offeredToID
                     
                   if FIRAuth.auth()?.currentUser?.uid == currentUserID {
                     

@@ -14,6 +14,7 @@ import Cosmos
 class ReviewViewController: UIViewController {
     
     var selectedProfile : User?
+    var currentUserID : String? = ""
     var review : String? = ""
     var selectedID : String? = ""
 
@@ -56,7 +57,7 @@ class ReviewViewController: UIViewController {
         
         FIRDatabase.database().reference().child("users").child(selectedID!).updateChildValues(userReview)
         
-        let alert = UIAlertController(title: "Review Submitted", message: "Your review for \((selectedProfile?.name)!) has been successfully submitted", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Review Submitted", message: "Your review has been successfully submitted", preferredStyle: UIAlertControllerStyle.alert)
         let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: nil)
         alert.addAction(alertAction)
         self.present(alert, animated: true, completion: nil)
@@ -66,10 +67,18 @@ class ReviewViewController: UIViewController {
     }
     
     func setupData() {
-        nameLabel.text = selectedProfile?.name
+        
+        if FIRAuth.auth()?.currentUser?.uid == selectedProfile?.uid {
+            
+            nameLabel.text = selectedProfile?.offeredBy
+        } else {
+            
+            nameLabel.text = selectedProfile?.name
+        }
+        
         subjectLabel.text = selectedProfile?.firstSub
         priceLabel.text = "\(selectedProfile!.price!)/hr"
-        selectedID = selectedProfile?.uid
+        selectedID = currentUserID
 
         if let profileURL = selectedProfile?.profileImageUrl {
             imageView.loadImageUsingCacheWithUrlString(profileURL)

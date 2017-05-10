@@ -217,6 +217,7 @@ class UserViewController: UIViewController {
         let reviewsVC = storyboard.instantiateViewController(withIdentifier: "ReviewListViewController") as! ReviewListViewController
         reviewsVC.currentUserID = self.otherUserID
         reviewsVC.reviewedUser = self.selectedProfile
+        
         present(reviewsVC, animated: true, completion: nil)
         
         
@@ -226,7 +227,13 @@ class UserViewController: UIViewController {
     
     @IBAction func chatClicked(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let chatID = currentUserID! + otherUserID
+        
+        
+        var userIDs = [currentUserID, otherUserID]
+        userIDs.sort { (user1, user2) -> Bool in
+            return user1! < user2!
+        }
+        let chatID = userIDs[0]! + userIDs[1]!
         
         let newChat = Chat(anId: chatID, userOneId: currentUserID!, userOneEmail: currentUserEmail, userOneScreenName: currentUserName!, userOneImageURL: currentUserImage!, userTwoId: otherUserID, userTwoEmail: profileEmail!, userTwoScreenName: self.nameLabel.text!, userTwoImageURL: profileImage!)
         

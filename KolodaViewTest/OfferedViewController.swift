@@ -20,6 +20,7 @@ class OfferedViewController: UIViewController {
     var offerSubject : String? = ""
     var offerName : String? = ""
     var currentUserName : String? = ""
+    var currentUserID : String? = ""
     var offeredID : String? = ""
     var users : [User] = []
     var secondUsers : [User] = []
@@ -69,7 +70,7 @@ class OfferedViewController: UIViewController {
             
             if let dictionary = snapshot.value as? [String : Any] {
                 //let user = User(dictionary: dictionary)
-                let currentUserID = dictionary["offeredBy"] as! String
+                self.currentUserID = dictionary["offeredBy"] as! String
                 self.offerLocation = dictionary["location"] as? String
                 self.offerSchedule = dictionary["schedule"] as? String
                 self.offerPrice = dictionary["price"] as? String
@@ -88,8 +89,10 @@ class OfferedViewController: UIViewController {
                     newUser.name = self.offerName
                     newUser.offeredBy = self.currentUserName
                     newUser.uid = self.offeredToID
+                
+                
                     
-                  if FIRAuth.auth()?.currentUser?.uid == currentUserID {
+                  if FIRAuth.auth()?.currentUser?.uid == self.currentUserID {
                     
                      self.users.append(newUser)
                   
@@ -153,7 +156,10 @@ extension OfferedViewController : UITableViewDataSource, UITableViewDelegate {
             let selectedUser = secondUsers[indexPath.row]
             
             guard let userController = storyboard?.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {return}
+            
             userController.selectedProfile = selectedUser
+            userController.currentUserID = self.currentUserID
+            
             present(userController, animated: true, completion: nil)
             break
         default:

@@ -219,9 +219,15 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 let user = User(dictionary: dictionary)
                 self.userRole = dictionary["role"] as? String
                 user.uid = snapshot.key
-                
                 let myID = FIRAuth.auth()?.currentUser?.uid
                 
+                if user.uid != myID {
+                    if self.userRole == "tutee"{
+                        self.tuteeUsers.append(user)
+                        self.users = self.tuteeUsers
+                    }
+                }
+   
                 FIRDatabase.database().reference().child("users").child(myID!).observe(.value, with: { (snapshot) in
                     if let dictionary = snapshot.value as? [String : Any] {
                         self.myRole = dictionary["role"] as? String
@@ -234,12 +240,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                                 }
                             }
                         } else {
-                            if user.uid != myID {
-                                if self.userRole == "tutee"{
-                                    self.tuteeUsers.append(user)
-                                    self.users = self.tuteeUsers
-                                }
-                            }
+                           return
                         }
                         
                         DispatchQueue.main.async(execute: {

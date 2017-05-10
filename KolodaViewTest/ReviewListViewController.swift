@@ -38,6 +38,10 @@ class ReviewListViewController: UIViewController, UITableViewDelegate, UITableVi
        
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func fetchReviews() {
         FIRDatabase.database().reference().child("users").child(currentUserID).observe(.value, with: { (snapshot) in
             
@@ -49,15 +53,13 @@ class ReviewListViewController: UIViewController, UITableViewDelegate, UITableVi
           
                 
                 self.usersReviews.append(self.reviewedUser!)
-                
-                
+
             }
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            
-            
+
         })
     }
     

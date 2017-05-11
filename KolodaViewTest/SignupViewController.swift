@@ -176,13 +176,14 @@ class SignupViewController: UIViewController {
     func tutorButtonTapped(_ sender: Any) {
         tuteeButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutor"])
-
+        dismiss(animated: true, completion: nil)
         goToPage(page: "ViewController")
     }
     
      func tuteeButtonTapped(_ sender: Any) {
         tutorButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutee"])
+        dismiss(animated: true, completion: nil)
         goToPage(page: "ViewController")
         
     }

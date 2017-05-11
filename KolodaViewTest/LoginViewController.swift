@@ -48,7 +48,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserExist()
-        
         facebookLogin()
         setupUI()
 

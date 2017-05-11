@@ -148,6 +148,7 @@ extension OfferedViewController : UITableViewDataSource, UITableViewDelegate {
             guard let userController = storyboard?.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {return}
             
             userController.selectedProfile = selectedUser
+            userController.selectedID = selectedUser.uid
             
             present(userController, animated: true, completion: nil)
             

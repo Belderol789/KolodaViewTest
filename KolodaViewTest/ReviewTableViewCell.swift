@@ -14,7 +14,6 @@ class ReviewTableViewCell: UITableViewCell {
     static let cellIdentifier = "ReviewTableViewCell"
     static let cellNib = UINib(nibName: ReviewTableViewCell.cellIdentifier, bundle: Bundle.main)
 
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var reviewTextView: UITextView!
     

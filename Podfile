@@ -13,7 +13,7 @@ pod 'Firebase/Storage'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod ‘Cosmos’
-pod 'Koloda', '~> 4.0'
+
 
 
 end

@@ -8,24 +8,10 @@
 
 import UIKit
 import Firebase
-import Koloda
+
 
 
 class ViewController: UIViewController, UISearchBarDelegate {
-    
-
-       
-    @IBOutlet weak var kolodaImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var scheduleLabel: UILabel!
-    @IBOutlet weak var subjectLabel: UILabel!
-    @IBOutlet weak var locationTextView: UITextView!
-    @IBOutlet weak var kolodaView: KolodaView!{
-        didSet{
-            kolodaView.isUserInteractionEnabled = true
-        }
-    }
 
     var tutorUsers = [User]()
     var tuteeUsers = [User]()
@@ -39,6 +25,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
     var userRole : String! = ""
     var myRole : String! = ""
     var images = [UIImage]()
+    var roles = [String]()
     
     
     @IBOutlet weak var userTableView: UITableView! {
@@ -51,6 +38,8 @@ class ViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var menuButton: UIButton! {
         didSet {
             menuButton.circlerImage()
+            menuButton.layer.borderWidth = 1
+            menuButton.layer.borderColor = UIColor.black.cgColor
         }
     }
     @IBOutlet weak var profileButton: UIButton!{
@@ -80,16 +69,10 @@ class ViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for _ in 0...3 {
-            self.images.append(#imageLiteral(resourceName: "menuButton"))
-        }
-        kolodaView.removeFromSuperview()
-        
-        kolodaView.dataSource = self
-        kolodaView.delegate = self
 
         currentUserId = FIRAuth.auth()?.currentUser?.uid
-        fetchUser()
+       // fetchUser()
+        fetchUserRole()
         setupSearchBar()
         setupButtonCenters()
         setupAnimation()
@@ -209,6 +192,16 @@ class ViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+    
+    func fetchUserRole() {
+        FIRDatabase.database().reference().child("users").child(currentUserId!).observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                self.myRole = dictionary["role"] as? String
+                
+                self.fetchUser()
+            }
+        })
+    }
 
     
     
@@ -219,76 +212,32 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 let user = User(dictionary: dictionary)
                 self.userRole = dictionary["role"] as? String
                 user.uid = snapshot.key
-                let myID = FIRAuth.auth()?.currentUser?.uid
                 
-                if user.uid != myID {
-                    if self.userRole == "tutee"{
+                if self.myRole == "tutor" {
+                    if self.userRole == "tutee" {
                         self.tuteeUsers.append(user)
                         self.users = self.tuteeUsers
                     }
-                }
-   
-                FIRDatabase.database().reference().child("users").child(myID!).observe(.value, with: { (snapshot) in
-                    if let dictionary = snapshot.value as? [String : Any] {
-                        self.myRole = dictionary["role"] as? String
-                        
-                        if self.myRole == "tutee" {
-                            if user.uid != myID {
-                                if self.userRole == "tutor" {
-                                    self.tutorUsers.append(user)
-                                    self.users = self.tutorUsers
-                                }
-                            }
-                        } else {
-                           return
-                        }
-                        
-                        DispatchQueue.main.async(execute: {
-                            self.filteredUsers = self.users
-                            self.userTableView.reloadData()
-                            
-                        })
-                
+                } else if self.myRole == "tutee" {
+                    if self.userRole == "tutor" {
+                        self.tutorUsers.append(user)
+                        self.users = self.tutorUsers
                     }
-                })
-
-                DispatchQueue.main.async(execute: {
-                    self.filteredUsers = self.users
-                    self.userTableView.reloadData()
-                    
-                })
-                
+                }
             }
             
+            DispatchQueue.main.async {
+                self.filteredUsers = self.users
+                self.userTableView.reloadData()
+                
+            }
         })
+        
     }
     
 }
 
-extension ViewController :  KolodaViewDelegate, KolodaViewDataSource {
-    
-    func kolodaDidRunOutOfCards(koloda: KolodaView) {
-//        dataSource.reset()
-    }
-    
-    
-    func koloda(koloda: KolodaView, didSelectCardAt index: Int) {
-        UIApplication.shared.openURL(NSURL(string: "https://yalantis.com/")! as URL)
-    }
-    
-    func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
-        return images.count
-    }
-    
-    func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        return UIImageView(image: images[index])
-    }
-    
-    func koloda(koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
-        return Bundle.main.loadNibNamed("OverlayView",
-                                                  owner: self, options: nil)?[0] as? OverlayView
-    }
-}
+
 
 extension ViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

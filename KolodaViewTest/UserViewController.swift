@@ -143,7 +143,7 @@ class UserViewController: UIViewController {
             self.descTextView.text = dictionary?["desc"] as? String
             self.profileImage = dictionary?["profileImageUrl"] as? String
             self.genderLabel.text = dictionary?["gender"] as? String
-            self.priceLabel.text = dictionary?["price"] as? String
+            self.priceLabel.text = (dictionary?["price"] as? String)! + "/hr"
             self.locationLabel.text = dictionary?["location"] as? String
             self.profileEmail = dictionary?["email"] as? String
             self.firstLabel.text = dictionary?["subject"] as? String

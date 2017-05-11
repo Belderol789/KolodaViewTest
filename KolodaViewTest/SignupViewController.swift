@@ -25,7 +25,12 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var genderTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: UITextView!{
+        didSet{
+            textView.layer.borderColor = UIColor.lightGray.cgColor
+            textView.layer.borderWidth = 1
+        }
+    }
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!

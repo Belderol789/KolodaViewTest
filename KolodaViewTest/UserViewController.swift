@@ -34,6 +34,12 @@ class UserViewController: UIViewController {
             imageView.circlerImage()
         }
     }
+    @IBOutlet weak var credentialView: UIView!{
+        didSet{
+            credentialView.layer.borderColor = UIColor.orange.cgColor
+            credentialView.layer.borderWidth = 1
+        }
+    }
     @IBOutlet weak var profileView: UIView!{
         didSet{
             profileView.layer.borderColor = UIColor.orange.cgColor
@@ -81,13 +87,30 @@ class UserViewController: UIViewController {
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
             descTextView.isUserInteractionEnabled = false
+            descTextView.layer.borderColor = UIColor.orange.cgColor
+            descTextView.layer.borderWidth = 1
         }
     }
     
-    @IBOutlet weak var firstLabel: UILabel!
-    @IBOutlet weak var secondLabel: UILabel!
+    @IBOutlet weak var firstLabel: UILabel!{
+        didSet{
+            firstLabel.layer.borderColor = UIColor.orange.cgColor
+            firstLabel.layer.borderWidth = 1
+        }
+    }
+    @IBOutlet weak var secondLabel: UILabel!{
+        didSet{
+            secondLabel.layer.borderColor = UIColor.orange.cgColor
+            secondLabel.layer.borderWidth = 1
+        }
+    }
     
-    @IBOutlet weak var thirdLabel: UILabel!
+    @IBOutlet weak var thirdLabel: UILabel!{
+        didSet{
+            thirdLabel.layer.borderColor = UIColor.orange.cgColor
+            thirdLabel.layer.borderWidth = 1
+        }
+    }
     @IBOutlet weak var reviewButton: UIButton!{
         didSet{
             reviewButton.circlerImage()

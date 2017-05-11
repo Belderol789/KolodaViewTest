@@ -129,7 +129,7 @@ class SignupViewController: UIViewController {
         tuteeButton.circlerImage()
         tutorButton.circlerImage()
         
-        textView.text = "Say something about yourself."
+        textView.text = "Say something about yourself such as work experience or your educational background."
     
         
         

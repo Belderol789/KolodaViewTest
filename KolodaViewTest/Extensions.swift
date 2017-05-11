@@ -70,7 +70,7 @@ extension UIButton {
         self.layer.masksToBounds = true
     }
     func borderColors() {
-        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.borderColor = UIColor.init(red: 4, green: 40, blue: 108, alpha: 1).cgColor
         self.layer.borderWidth = 1.0
     }
 
@@ -84,7 +84,7 @@ extension UILabel {
     }
     
     func borderColor() {
-        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.borderColor = UIColor.init(red: 4, green: 40, blue: 108, alpha: 1).cgColor
         self.layer.borderWidth = 1.0
     }
 }
@@ -103,7 +103,7 @@ extension UITextView {
     }
     
     func borderColor() {
-        self.layer.borderColor = UIColor.orange.cgColor
+        self.layer.borderColor = UIColor.init(red: 4, green: 40, blue: 108, alpha: 1).cgColor
         self.layer.borderWidth = 1.0
     }
     

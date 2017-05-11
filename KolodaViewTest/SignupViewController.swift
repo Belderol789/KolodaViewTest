@@ -32,8 +32,24 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var tutorButton: UIButton!
     @IBOutlet weak var tuteeButton: UIButton!
-    @IBOutlet weak var detailView: UIView!
-    @IBOutlet weak var credentialView: UIView!
+    @IBOutlet weak var detailView: UIView!{
+        didSet{
+            detailView.layer.cornerRadius = 10
+            detailView.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet weak var credentialView: UIView!{
+        didSet{
+            credentialView.layer.cornerRadius = 10
+            credentialView.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet weak var viewWithImage: UIView!{
+        didSet{
+            viewWithImage.layer.cornerRadius = 10
+            viewWithImage.layer.masksToBounds = true
+        }
+    }
     
 
     override func viewDidLoad() {
@@ -70,7 +86,6 @@ class SignupViewController: UIViewController {
 
         }
 
-      
         FIRAuth.auth()?.createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user: FIRUser?, error) in
             
             if error != nil {

@@ -18,6 +18,8 @@ class OfferedTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!{
         didSet{
             profileImageView.circlerImage()
+            profileImageView.layer.borderWidth = 1.0
+            profileImageView.layer.borderColor = UIColor.orange.cgColor
         }
     }
     @IBOutlet weak var nameLabel: UILabel!

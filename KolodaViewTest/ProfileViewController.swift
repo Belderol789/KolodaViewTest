@@ -21,6 +21,12 @@ class ProfileViewController: UIViewController {
     var backButtonCenter : CGPoint!
     var roleButtonCenter : CGPoint!
 
+    @IBOutlet weak var credentialView: UIView!{
+        didSet{
+            credentialView.layer.borderWidth = 1
+            credentialView.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
 
     @IBOutlet weak var editButton: UIButton!{
         didSet {
@@ -33,9 +39,24 @@ class ProfileViewController: UIViewController {
             imageView.circlerImage()
         }
     }
-    @IBOutlet weak var priceTextField: UITextField!
-    @IBOutlet weak var firstTextField: UITextField!
-    @IBOutlet weak var secondTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!{
+        didSet{
+            priceTextField.layer.borderWidth = 1
+            priceTextField.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
+    @IBOutlet weak var firstTextField: UITextField!{
+        didSet{
+            firstTextField.layer.borderWidth = 1
+            firstTextField.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
+    @IBOutlet weak var secondTextField: UITextField!{
+        didSet{
+            secondTextField.layer.borderWidth = 1
+            secondTextField.layer.borderColor = UIColor.orange.cgColor
+        }
+    }
     @IBOutlet weak var roleLabel: UILabel!
     @IBOutlet weak var tuteeButton: UIButton!{
         didSet{
@@ -47,20 +68,25 @@ class ProfileViewController: UIViewController {
             tutorButton.circlerImage()
         }
     }
-    @IBOutlet weak var cancelButton: UIButton!{
+   
+    @IBOutlet weak var thirdTextField: UITextField!{
         didSet{
-            cancelButton.circlerImage()
+            thirdTextField.layer.borderWidth = 1
+            thirdTextField.layer.borderColor = UIColor.orange.cgColor
         }
     }
-    @IBOutlet weak var thirdTextField: UITextField!
     @IBOutlet weak var locationTextView: UITextView!{
         didSet{
             locationTextView.text = "Where would you like to meetup?"
+            locationTextView.layer.borderWidth = 1
+            locationTextView.layer.borderColor = UIColor.orange.cgColor
         }
     }
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
             descTextView.text = "Say something about yourself!"
+            descTextView.layer.borderWidth = 1
+            descTextView.layer.borderColor = UIColor.orange.cgColor
         }
     }
     @IBOutlet weak var nameLabel: UILabel!
@@ -101,6 +127,7 @@ class ProfileViewController: UIViewController {
     
     
     func setupUI() {
+        
         self.changeRoleButton.center = self.editButton.center
         self.saveButton.center = self.editButton.center
   

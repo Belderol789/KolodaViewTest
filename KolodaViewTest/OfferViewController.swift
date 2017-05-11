@@ -29,22 +29,40 @@ class OfferViewController: UIViewController {
     var userList : [User] = []
     var ref : FIRDatabaseReference!
     
-    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var priceTextField: UITextField!{
+        didSet{
+            priceTextField.borderColor()
+        }
+    }
     @IBOutlet weak var locationTextView: UITextView!{
         didSet{
             locationTextView.text = "Where would you like to meetup?"
+            locationTextView.layer.borderColor = UIColor.orange.cgColor
+            locationTextView.layer.borderWidth = 1.0
         }
     }
-    @IBOutlet weak var subjectTextField: UITextField!
-    @IBOutlet weak var scheduleTextField: UITextField!
+    @IBOutlet weak var subjectTextField: UITextField!{
+        didSet{
+            subjectTextField.borderColor()
+        }
+    }
+    @IBOutlet weak var scheduleTextField: UITextField!{
+        didSet{
+            scheduleTextField.borderColor()
+        }
+    }
     @IBOutlet weak var offerButton: UIButton!{
         didSet{
             offerButton.circlerImage()
+            offerButton.layer.borderColor = UIColor.orange.cgColor
+            offerButton.layer.borderWidth = 1.0
         }
     }
     @IBOutlet weak var cancelButton: UIButton!{
         didSet{
             cancelButton.circlerImage()
+            cancelButton.layer.borderColor = UIColor.orange.cgColor
+            cancelButton.layer.borderWidth = 1.0
         }
     }
     

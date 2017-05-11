@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Social
+import Cosmos
 
 class ProfileViewController: UIViewController {
     
@@ -17,23 +18,15 @@ class ProfileViewController: UIViewController {
     var profileRating : String? = ""
     var currentUserID = FIRAuth.auth()?.currentUser?.uid
     var currentUser : FIRUser? = FIRAuth.auth()?.currentUser
-    var saveIconCenter : CGPoint!
-    var backButtonCenter : CGPoint!
-    var roleButtonCenter : CGPoint!
 
+    @IBOutlet weak var viewCosmos: CosmosView!
     @IBOutlet weak var credentialView: UIView!{
         didSet{
             credentialView.layer.borderWidth = 1
             credentialView.layer.borderColor = UIColor.orange.cgColor
         }
     }
-
-    @IBOutlet weak var editButton: UIButton!{
-        didSet {
-            editButton.circlerImage()
-        }
-    }
-    @IBOutlet weak var editLabel: UILabel!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
             imageView.circlerImage()
@@ -105,16 +98,12 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var shareButton: UIButton!{
         didSet{
             shareButton.circlerImage()
-            shareButton.layer.borderColor = UIColor.white.cgColor
-            shareButton.layer.borderWidth = 1.0
         }
     }
   
     override func viewDidLoad() {
         super.viewDidLoad()
         checkTextViews()
-        self.roleButtonCenter = self.changeRoleButton.center
-        self.saveIconCenter = self.saveButton.center
         listenToFirebase()
         setupProfile()
         setupUI()
@@ -127,14 +116,8 @@ class ProfileViewController: UIViewController {
     
     
     func setupUI() {
-        
-        self.changeRoleButton.center = self.editButton.center
-        self.saveButton.center = self.editButton.center
-  
-        
         self.tuteeButton.alpha = 0
         self.tutorButton.alpha = 0
-        
         priceTextField.isUserInteractionEnabled = false
         firstTextField.isUserInteractionEnabled = false
         secondTextField.isUserInteractionEnabled = false
@@ -142,6 +125,7 @@ class ProfileViewController: UIViewController {
         locationTextView.isUserInteractionEnabled = false
         descTextView.isUserInteractionEnabled = false
         imageView.isUserInteractionEnabled = false
+        viewCosmos.isUserInteractionEnabled = false
     }
     
     func setupProfile() {
@@ -156,8 +140,7 @@ class ProfileViewController: UIViewController {
     func goToPage(page: String) {
         let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
         present(gameScene, animated: true, completion: nil)
-//        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-//        appDelegate.window?.rootViewController = gameScene
+
         
     }
 
@@ -241,16 +224,31 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    @IBAction func editButtonTapped(_ sender: Any) {
+        priceTextField.isUserInteractionEnabled = true
+        firstTextField.isUserInteractionEnabled = true
+        secondTextField.isUserInteractionEnabled = true
+        thirdTextField.isUserInteractionEnabled = true
+        locationTextView.isUserInteractionEnabled = true
+        descTextView.isUserInteractionEnabled = true
+        imageView.isUserInteractionEnabled = true
+    }
     
     
-    @IBAction func saveButtonPressed(_ sender: Any) {
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        priceTextField.isUserInteractionEnabled = false
+        firstTextField.isUserInteractionEnabled = false
+        secondTextField.isUserInteractionEnabled = false
+        thirdTextField.isUserInteractionEnabled = false
+        locationTextView.isUserInteractionEnabled = false
+        descTextView.isUserInteractionEnabled = false
+        imageView.isUserInteractionEnabled = false
         guard let updatedLocation = locationTextView.text,
-        let updatedDesc = descTextView.text,
-        let updatedPrice = priceTextField.text,
-        let updatedFirst = firstTextField.text,
-        let updatedSecond = secondTextField.text,
-        let updatedThird = thirdTextField.text else {return}
-        
+            let updatedDesc = descTextView.text,
+            let updatedPrice = priceTextField.text,
+            let updatedFirst = firstTextField.text,
+            let updatedSecond = secondTextField.text,
+            let updatedThird = thirdTextField.text else {return}
         let values : [String : Any] = ["location": updatedLocation, "desc": updatedDesc, "subject": updatedFirst, "secondSubject": updatedSecond, "thirdSubject": updatedThird, "price": updatedPrice]
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(values)
         
@@ -317,40 +315,6 @@ class ProfileViewController: UIViewController {
     }
     
   
- 
-    @IBAction func editButtonTapped(_ sender: UIButton) {
-        if editButton.currentBackgroundImage == #imageLiteral(resourceName: "editButtonOff") {
-            editButton.setBackgroundImage(#imageLiteral(resourceName: "editButton"), for: .normal)
-            
-            editLabel.text = "Editing..."
-            priceTextField.isUserInteractionEnabled = true
-            firstTextField.isUserInteractionEnabled = true
-            secondTextField.isUserInteractionEnabled = true
-            thirdTextField.isUserInteractionEnabled = true
-            locationTextView.isUserInteractionEnabled = true
-            descTextView.isUserInteractionEnabled = true
-            imageView.isUserInteractionEnabled = true
-            
-            self.handleImage()
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                self.changeRoleButton.center = self.roleButtonCenter
-                self.saveButton.center = self.saveIconCenter
-            })
-   
-        } else {
-            editButton.setBackgroundImage(#imageLiteral(resourceName: "editButtonOff"), for: .normal)
-            editLabel.text = "Done"
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                self.changeRoleButton.center = self.editButton.center
-                self.saveButton.center = self.editButton.center
-            })
-           
-            setupUI()
-        }
-        
-    }
 
 }
 

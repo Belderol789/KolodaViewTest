@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Cosmos
 
 class UserViewController: UIViewController {
     
@@ -75,6 +76,11 @@ class UserViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var cosmoView: CosmosView!{
+        didSet{
+            cosmoView.isUserInteractionEnabled = false
+        }
+    }
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationTextView: UITextView!{
         didSet{
@@ -198,8 +204,8 @@ class UserViewController: UIViewController {
    
     @IBAction func moreClicked(_ sender: UIButton) {
         
-        if moreButton.currentBackgroundImage == #imageLiteral(resourceName: "moreButton") {
-            sender.setBackgroundImage(#imageLiteral(resourceName: "moreButtonOff"), for: .normal)
+        if moreButton.currentBackgroundImage == #imageLiteral(resourceName: "menuButton") {
+            sender.setBackgroundImage(#imageLiteral(resourceName: "menuButtonOff"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 self.messageButton.center = self.messageButtonCenter
                 self.offerButton.center = self.offerButtonCenter
@@ -207,7 +213,7 @@ class UserViewController: UIViewController {
                 self.reviewButton.center = self.reviewButtonCenter
             })
         } else {
-            moreButton.setBackgroundImage(#imageLiteral(resourceName: "moreButton"), for: .normal)
+            moreButton.setBackgroundImage(#imageLiteral(resourceName: "menuButton"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 self.messageButton.center = self.moreButton.center
                 self.offerButton.center = self.moreButton.center

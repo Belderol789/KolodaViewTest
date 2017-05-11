@@ -38,8 +38,6 @@ class ViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var menuButton: UIButton! {
         didSet {
             menuButton.circlerImage()
-            menuButton.layer.borderWidth = 1
-            menuButton.layer.borderColor = UIColor.black.cgColor
         }
     }
     @IBOutlet weak var profileButton: UIButton!{
@@ -130,8 +128,8 @@ class ViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func menuButtonClicked(_ sender: UIButton) {
-        if menuButton.currentBackgroundImage == #imageLiteral(resourceName: "moreButton") {
-            sender.setBackgroundImage(#imageLiteral(resourceName: "moreButtonOff"), for: .normal)
+        if menuButton.currentBackgroundImage == #imageLiteral(resourceName: "menu") {
+            sender.setBackgroundImage(#imageLiteral(resourceName: "menuOff"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 
                 self.profileButton.alpha = 1
@@ -147,7 +145,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                 self.logoutButton.center = self.logoutButtonCenter
             })
         } else {
-            menuButton.setBackgroundImage(#imageLiteral(resourceName: "moreButton"), for: .normal)
+            menuButton.setBackgroundImage(#imageLiteral(resourceName: "menu"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 
                 self.profileButton.alpha = 0
@@ -254,7 +252,7 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         }
         cell.nameLabel.text = user.name
         cell.locationLabel.text = user.location
-        cell.priceRangeLabel.text = user.price
+        cell.priceRangeLabel.text = (user.price)! + "/hr"
         cell.subjectLabel.text = user.firstSub
         return cell
     }

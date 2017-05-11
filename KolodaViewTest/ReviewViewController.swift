@@ -25,7 +25,8 @@ class ReviewViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var reviewTextView: UITextView!{
         didSet{
-            reviewTextView.borderColor()
+            reviewTextView.layer.borderWidth = 1
+            reviewTextView.layer.borderColor = UIColor.orange.cgColor
         }
     }
     @IBOutlet weak var submitButton: UIButton!{

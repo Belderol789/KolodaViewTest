@@ -8,16 +8,11 @@
 
 import UIKit
 import Firebase
+import Social
 
 class ProfileViewController: UIViewController {
     
-    var profilePrice : String? = ""
-    var profileFirst : String? = ""
-    var profileSecond : String? = ""
-    var profileThird : String? = ""
-    var profileLocation : String? = ""
-    var profileDesc : String? = ""
-    var profileName : String? = ""
+
     var profileImage : String? = ""
     var profileRating : String? = ""
     var currentUserID = FIRAuth.auth()?.currentUser?.uid
@@ -25,6 +20,7 @@ class ProfileViewController: UIViewController {
     var saveIconCenter : CGPoint!
     var backButtonCenter : CGPoint!
     var roleButtonCenter : CGPoint!
+
 
     @IBOutlet weak var editButton: UIButton!{
         didSet {
@@ -80,9 +76,14 @@ class ProfileViewController: UIViewController {
             changeRoleButton.circlerImage()
         }
     }
-   
-    
-    
+    @IBOutlet weak var shareButton: UIButton!{
+        didSet{
+            shareButton.circlerImage()
+            shareButton.layer.borderColor = UIColor.white.cgColor
+            shareButton.layer.borderWidth = 1.0
+        }
+    }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         checkTextViews()
@@ -102,6 +103,7 @@ class ProfileViewController: UIViewController {
     func setupUI() {
         self.changeRoleButton.center = self.editButton.center
         self.saveButton.center = self.editButton.center
+  
         
         self.tuteeButton.alpha = 0
         self.tutorButton.alpha = 0
@@ -132,6 +134,35 @@ class ProfileViewController: UIViewController {
         
     }
 
+    @IBAction func shareButtonTapped(_ sender: Any) {
+       let shareAlert = UIAlertController(title: "Share on Social Media", message: "Reach out to more users", preferredStyle: .actionSheet)
+        let fbShare = UIAlertAction(title: "Share on Facebook", style: .default) { (action) in
+            
+            if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
+                let post = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                
+                post?.setInitialText("Check out my Profile!")
+                post?.add(UIImage(named: self.profileImage!))
+                
+                self.present(post!, animated: true, completion: nil)
+                
+            } else {
+                self.showAlert(service: "Facebook")
+            }
+ 
+        }
+        shareAlert.addAction(fbShare)
+        self.present(shareAlert, animated: true, completion: nil)
+      
+    }
+    
+    func showAlert(service: String) {
+        let alert = UIAlertController(title: "Error", message: "You are not connected to \(service)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func backButtonTapped(_ sender: Any) {
           goToPage(page: "ViewController")
@@ -145,21 +176,16 @@ class ProfileViewController: UIViewController {
 
         })
     }
-  
 
     @IBAction func tutorButtonTapped(_ sender: Any) {
         tuteeButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutor"])
-       
-     
-     
+ 
     }
     @IBAction func tuteeButtonTapped(_ sender: Any) {
 
         tutorButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(currentUserID!).updateChildValues(["role" : "tutee"])
-        
-      
     }
 
     @IBAction func locationPlaceHolder(_ sender: Any) {
@@ -284,11 +310,7 @@ class ProfileViewController: UIViewController {
                 self.changeRoleButton.center = self.roleButtonCenter
                 self.saveButton.center = self.saveIconCenter
             })
-           
-            
-            
-            
-            
+   
         } else {
             editButton.setBackgroundImage(#imageLiteral(resourceName: "editButtonOff"), for: .normal)
             editLabel.text = "Done"

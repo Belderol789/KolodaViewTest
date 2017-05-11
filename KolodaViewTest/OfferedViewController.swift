@@ -70,7 +70,7 @@ class OfferedViewController: UIViewController {
             
             if let dictionary = snapshot.value as? [String : Any] {
                 //let user = User(dictionary: dictionary)
-                self.currentUserID = dictionary["offeredBy"] as! String
+                self.currentUserID = dictionary["offeredBy"] as? String
                 self.offerLocation = dictionary["location"] as? String
                 self.offerSchedule = dictionary["schedule"] as? String
                 self.offerPrice = dictionary["price"] as? String

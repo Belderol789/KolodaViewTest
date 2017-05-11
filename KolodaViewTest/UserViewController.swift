@@ -15,9 +15,6 @@ class UserViewController: UIViewController {
     var otherUserID : String = ""
     var profileImage : String? = ""
     var profileEmail : String? = ""
-    var profileFirstSub : String? = ""
-    var profileSecondSub : String? = ""
-    var profileThirdSub : String? = ""
     var offerButtonCenter : CGPoint!
     var messageButtonCenter : CGPoint!
     var reviewButtonCenter : CGPoint!
@@ -31,6 +28,7 @@ class UserViewController: UIViewController {
   
     
 
+    @IBOutlet weak var roleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
             imageView.circlerImage()
@@ -71,26 +69,17 @@ class UserViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var nameLabel: UILabel! {
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var locationTextView: UITextView!{
         didSet{
-            nameLabel.curveEdges()
+            locationTextView.isUserInteractionEnabled = false
         }
     }
-    @IBOutlet weak var locationLabel: UILabel! {
-        didSet {
-            locationLabel.curveEdges()
-        }
-    }
-    @IBOutlet weak var priceLabel: UILabel!{
-        didSet {
-            priceLabel.curveEdges()
-        }
-    }
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var descTextView: UITextView!{
         didSet{
-            
             descTextView.isUserInteractionEnabled = false
         }
     }
@@ -144,11 +133,12 @@ class UserViewController: UIViewController {
             self.profileImage = dictionary?["profileImageUrl"] as? String
             self.genderLabel.text = dictionary?["gender"] as? String
             self.priceLabel.text = (dictionary?["price"] as? String)! + "/hr"
-            self.locationLabel.text = dictionary?["location"] as? String
+            self.locationTextView.text = dictionary?["location"] as? String
             self.profileEmail = dictionary?["email"] as? String
             self.firstLabel.text = dictionary?["subject"] as? String
             self.secondLabel.text = dictionary?["secondSubject"] as? String
             self.thirdLabel.text = dictionary?["thirdSubject"] as? String
+            self.roleLabel.text = dictionary?["role"] as? String
             
             
             

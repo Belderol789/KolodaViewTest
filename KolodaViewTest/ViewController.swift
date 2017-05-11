@@ -71,6 +71,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
         
 
         currentUserId = FIRAuth.auth()?.currentUser?.uid
+        
        // fetchUser()
         fetchUserRole()
         setupSearchBar()

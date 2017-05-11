@@ -154,12 +154,12 @@ extension LoginViewController : FBSDKLoginButtonDelegate {
                 if let dictionary = result as? [String : Any] {
                     self.FBUserName = user!.displayName
                     self.FBUserPhoto = "\((user!.photoURL)!)"
-                    self.FBUserID = dictionary["id"] as? String
                     self.FBGender = dictionary["gender"] as? String
                     self.FBEmail = dictionary["email"] as? String
                     guard let FBvalues : [String : Any] = ["name" : self.FBUserName, "gender" : self.FBGender!, "profileImageUrl" : self.FBUserPhoto, "role" : "tutee"] else {return}
+                    FIRDatabase.database().reference().child("users").child((user?.uid)!).updateChildValues(FBvalues)
                     
-                    FIRDatabase.database().reference().child("users").child(self.FBUserID).updateChildValues(FBvalues)
+                    
                     
 
                 }

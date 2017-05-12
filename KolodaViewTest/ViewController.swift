@@ -181,13 +181,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
     @IBAction func profileButtonTapped(_ sender: UIButton) {
         goToPage(page: "ProfileViewController")
     }
-    
     func goToPage(page: String)
     {
         
         let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        appDelegate.window?.rootViewController = gameScene
+        present(gameScene, animated: true, completion: nil)
+//        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+//        appDelegate.window?.rootViewController = gameScene
         
     }
     

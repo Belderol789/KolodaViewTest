@@ -35,18 +35,8 @@ class UserViewController: UIViewController {
             imageView.circlerImage()
         }
     }
-    @IBOutlet weak var credentialView: UIView!{
-        didSet{
-            credentialView.layer.borderColor = UIColor.orange.cgColor
-            credentialView.layer.borderWidth = 1
-        }
-    }
-    @IBOutlet weak var profileView: UIView!{
-        didSet{
-            profileView.layer.borderColor = UIColor.orange.cgColor
-            profileView.layer.borderWidth = 1
-        }
-    }
+    @IBOutlet weak var credentialView: UIView!
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var moreButton: UIButton!{
         didSet{
             moreButton.circlerImage()

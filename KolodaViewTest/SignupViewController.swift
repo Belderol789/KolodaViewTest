@@ -71,7 +71,9 @@ class SignupViewController: UIViewController {
  
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
-         goToPage(page: "LoginViewController")
+        
+        dismiss(animated: true, completion: nil)
+         //goToPage(page: "LoginViewController")
         
     }
   
@@ -181,14 +183,14 @@ class SignupViewController: UIViewController {
     func tutorButtonTapped(_ sender: Any) {
         tuteeButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutor"])
-        dismiss(animated: true, completion: nil)
+      
         goToPage(page: "ViewController")
     }
     
      func tuteeButtonTapped(_ sender: Any) {
         tutorButton.isUserInteractionEnabled = false
         FIRDatabase.database().reference().child("users").child(id).updateChildValues(["role" : "tutee"])
-        dismiss(animated: true, completion: nil)
+        
         goToPage(page: "ViewController")
         
     }
@@ -211,8 +213,9 @@ class SignupViewController: UIViewController {
     
     func goToPage(page: String)
     {
-        let controller = storyboard?.instantiateViewController(withIdentifier: page)
-        present(controller!, animated: true, completion: nil)
+        let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
+        dismiss(animated: true, completion: nil)
+        present(gameScene, animated: true, completion: nil)
         
     }
 

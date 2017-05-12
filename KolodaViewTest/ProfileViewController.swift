@@ -146,6 +146,9 @@ class ProfileViewController: UIViewController {
 
     @IBAction func shareButtonTapped(_ sender: Any) {
        let shareAlert = UIAlertController(title: "Share on Social Media", message: "Reach out to more users", preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
         let fbShare = UIAlertAction(title: "Share on Facebook", style: .default) { (action) in
             
             if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
@@ -162,6 +165,7 @@ class ProfileViewController: UIViewController {
  
         }
         shareAlert.addAction(fbShare)
+        shareAlert.addAction(cancel)
         self.present(shareAlert, animated: true, completion: nil)
       
     }
@@ -175,7 +179,8 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
-          goToPage(page: "ViewController")
+        dismiss(animated: true, completion: nil)
+        //goToPage(page: "ViewController")
     }
     
     

@@ -106,9 +106,8 @@ class LoginViewController: UIViewController {
     func goToPage(page: String) {
         
         let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: page) as UIViewController
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        appDelegate.window?.rootViewController = gameScene
-        
+        //dismiss(animated: true, completion: nil)
+        present(gameScene, animated: true, completion: nil)
     }
 
 }
@@ -157,23 +156,15 @@ extension LoginViewController : FBSDKLoginButtonDelegate {
                     self.FBEmail = dictionary["email"] as? String
                     guard let FBvalues : [String : Any] = ["name" : self.FBUserName, "gender" : self.FBGender!, "profileImageUrl" : self.FBUserPhoto, "role" : "tutee"] else {return}
                     FIRDatabase.database().reference().child("users").child((user?.uid)!).updateChildValues(FBvalues)
-                    
-                    
-                    
 
                 }
                 
                 self.goToPage(page: "ViewController")
             }
-            
-           
-            
-            
+
             print("Successfully logged in ", user!)
         })
-        
-       
-        
+
     }
 
 }

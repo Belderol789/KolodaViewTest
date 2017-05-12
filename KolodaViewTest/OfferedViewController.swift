@@ -57,10 +57,11 @@ class OfferedViewController: UIViewController {
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "ViewController")
-        //dismiss(animated: true, completion: nil)
-        present(viewController, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        let viewController = storyboard.instantiateViewController(withIdentifier: "ViewController")
+//        //dismiss(animated: true, completion: nil)
+//        present(viewController, animated: true, completion: nil)
         
     }
     
